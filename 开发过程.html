@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x5f00;&#x53d1;&#x8fc7;&#x7a0b;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="开发过程">开发过程</h1>
+<h2 id="项目资源">项目资源</h2>
+<p>RuoYi-Vue文档地址：<a href="https://doc.ruoyi.vip/ruoyi-vue/">https://doc.ruoyi.vip/ruoyi-vue/</a></p>
+<h2 id="系统需求">系统需求</h2>
+<ul>
+<li>JDK &gt;= 1.8</li>
+<li>MySQL &gt;= 5.7</li>
+<li>Maven &gt;= 3.0</li>
+<li>Node &gt;= 12</li>
+<li>Redis &gt;= 3</li>
+</ul>
+<h2 id="技术栈">技术栈</h2>
+<ul>
+<li>Java EE 8（最新版本：Jakarta EE 10）</li>
+<li>Servlet 3.0（最新版本：6.1）</li>
+<li>Apache Maven 3</li>
+<li><strong>Spring Boot 2.2.x（最新版本：3.4.2）</strong></li>
+<li><strong>Spring Framework 5.2.x（最新版本：6.2.3）</strong></li>
+<li><strong>Spring Security 5.2.x（最新版本：6.4.3）</strong></li>
+<li>Apache MyBatis 3.5.x</li>
+<li>Hibernate Validation 6.0.x（最新版本：8.0.2）</li>
+<li>Alibaba Druid 1.2.x</li>
+<li><strong>Vue 2.6.x（最新版本：3.5.13）</strong></li>
+<li>Axios 0.21.x（最新版本：1.8.1）</li>
+<li><strong>Element 2.15.x（最新版本：Element Plus 2.9.5，基于Vue3.基于Vue2的最新版本是2.15.14）</strong></li>
+</ul>
+<blockquote>
+<p>技术栈最大的问题是框架版本太老了，基于若依开发，就意味着要继承它的技术栈。这里Vue、Element、Spring Boot、Spring Framework的问题比较大。</p>
+</blockquote>
+<h2 id="环境部署">环境部署</h2>
+<h3 id="依赖">依赖</h3>
+<ul>
+<li>MySQL</li>
+<li>Redis</li>
+</ul>
+<h4 id="mysql">MySQL</h4>
+<p>使用 <strong>docker compose</strong> 运行，创建了以下数据库与用户：</p>
+<ul>
+<li>数据库：ry</li>
+<li>用户： ruoyi / ruoyi123456</li>
+</ul>
+<p>导入SQL脚本：</p>
+<ul>
+<li>ry_20240629.sql</li>
+<li>quartz.sql</li>
+</ul>
+<h4 id="redis">Redis</h4>
+<p>使用 <strong>docker compose</strong> 运行。</p>
+<h3 id="后端构建与运行">后端构建与运行</h3>
+<h4 id="后端构建">后端构建</h4>
+<p>在项目根目录执行：</p>
+<pre><code class="language-bash">mvn clean package -Dmaven.test.skip=<span class="hljs-literal">true</span>
+</code></pre>
+<h4 id="后端运行">后端运行</h4>
+<p>在项目根目录执行：</p>
+<pre><code class="language-bash">java -jar ruoyi-admin/target/ruoyi-admin.jar
+</code></pre>
+<h3 id="前端构建与运行">前端构建与运行</h3>
+<h4 id="前端依赖安装">前端依赖安装</h4>
+<p>在 <strong>ruoyi-ui</strong> 目录运行：</p>
+<pre><code class="language-bash">npm install --registry=https://registry.npmmirror.com
+</code></pre>
+<h4 id="前端构建">前端构建</h4>
+<p>在 <strong>ruoyi-ui</strong> 目录运行：</p>
+<pre><code class="language-bash">npm run build:prod
+</code></pre>
+<blockquote>
+<p>开发阶段无需此步骤；生产环境将 <strong>dist</strong> 目录的内容部署到Web服务器。</p>
+</blockquote>
+<h4 id="前端运行">前端运行</h4>
+<p>在 <strong>ruoyi-ui</strong> 目录运行：</p>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<blockquote>
+<p>开发阶段如此运行，之后会打开浏览器访问本地1024端口。</p>
+</blockquote>
+<h2 id="开发一个页面用于对数据库的一张表进行crud">开发一个页面，用于对数据库的一张表进行CRUD</h2>
+<h3 id="代码生成">代码生成</h3>
+<h4 id="建表">建表</h4>
+<p>点击 <strong>系统工具</strong> -&gt; <strong>代码生成</strong> ，在页面点击 <strong>创建</strong> ，填写建表SQL语句</p>
+<pre><code class="language-sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> monitoring_site
+(
+  site_id          <span class="hljs-type">bigint</span>(<span class="hljs-number">20</span>)      <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> auto_increment    comment <span class="hljs-string">&#x27;主键&#x27;</span>,
+  site_name        <span class="hljs-type">varchar</span>(<span class="hljs-number">100</span>)    <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;&#x27;</span>                 comment <span class="hljs-string">&#x27;监测站名称&#x27;</span>,
+  site_type        <span class="hljs-type">varchar</span>(<span class="hljs-number">100</span>)    <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;&#x27;</span>                 comment <span class="hljs-string">&#x27;监测站类型&#x27;</span>,
+  status           <span class="hljs-type">char</span>(<span class="hljs-number">1</span>)         <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;0&#x27;</span>                comment <span class="hljs-string">&#x27;状态（0正常 1停用）&#x27;</span>,
+  create_by        <span class="hljs-type">varchar</span>(<span class="hljs-number">64</span>)     <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;&#x27;</span>                 comment <span class="hljs-string">&#x27;创建者&#x27;</span>,
+  create_time      datetime                                   comment <span class="hljs-string">&#x27;创建时间&#x27;</span>,
+  update_by        <span class="hljs-type">varchar</span>(<span class="hljs-number">64</span>)     <span class="hljs-keyword">default</span> <span class="hljs-string">&#x27;&#x27;</span>                 comment <span class="hljs-string">&#x27;更新者&#x27;</span>,
+  update_time      datetime                                   comment <span class="hljs-string">&#x27;更新时间&#x27;</span>,
+  remark           <span class="hljs-type">varchar</span>(<span class="hljs-number">500</span>)    <span class="hljs-keyword">default</span> <span class="hljs-keyword">null</span>               comment <span class="hljs-string">&#x27;备注&#x27;</span>,
+  <span class="hljs-keyword">primary</span> key (site_id)
+) engine<span class="hljs-operator">=</span>innodb auto_increment<span class="hljs-operator">=</span><span class="hljs-number">100</span> comment <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;监测站点表&#x27;</span>;
+</code></pre>
+<p>点击 <strong>确定</strong> ，将在数据库中创建对应的表。</p>
+<h4 id="生成模板代码">生成模板代码</h4>
+<p>建表后，选择表，并点击页面上的 <strong>生成</strong> ，系统将生成操作对应的表的模板代码，保存在 <strong>ruoyi.zip</strong> 文件里，下载到本地。</p>
+<h4 id="将模板代码添加到系统">将模板代码添加到系统</h4>
+<p>解压下载的文件 <strong>ruoyi.zip</strong> ，将其中的内容（包括java代码、mybatis配置、vue代码等），复制到 <strong>ruoyi-admin</strong> 、 <strong>ruoyi-ui</strong> 目录下的对应子目录中。</p>
+<h3 id="重新编译打包前后端">重新编译、打包前后端</h3>
+<p>开发阶段后端重新打包、重启，前端重启。</p>
+<h3 id="菜单配置">菜单配置</h3>
+<p>重启后，还无法访问刚才创建的页面及其功能，需要配置菜单。</p>
+<p>可以在 <strong>系统管理</strong> -&gt; <strong>菜单管理</strong> 中配置，但刚才代码生成时， <strong>ruoyi.zip</strong> 文件里已经提供了一个菜单配置的SQL脚本： <strong>siteMenu.sql</strong> ，执行这个脚本，重新登录系统即可。</p>
+<p>在生成的模板代码中，将菜单设置在了 <strong>系统工具</strong> 下面，可以自行调整。</p>
+<h3 id="生成结果说明">生成结果说明</h3>
+<ul>
+<li>生成的模板代码，具备了对数据库表的CRUD操作功能，分页、导出（Excel）功能。</li>
+<li>如需对模板代码进行修改，可直接修改对应的代码文件，RuoYi没有提供修改界面。</li>
+<li>排序功能需要自己修改代码，系统没有提供配置界面。</li>
+</ul>
+
+            
+            
+        </body>
+        </html>
