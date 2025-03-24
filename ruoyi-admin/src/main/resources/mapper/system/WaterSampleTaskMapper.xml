@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.WaterSampleTaskMapper">
+    
+    <resultMap type="WaterSampleTask" id="WaterSampleTaskResult">
+        <result property="pkId"    column="pk_id"    />
+        <result property="taskCode"    column="task_code"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="operator"    column="operator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="scheduleTime"    column="schedule_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="taskStatus"    column="task_status"    />
+    </resultMap>
+
+    <sql id="selectWaterSampleTaskVo">
+        select pk_id, task_code, task_name, operator, create_time, schedule_time, start_time, finish_time, task_status from water_sample_task
+    </sql>
+
+    <select id="selectWaterSampleTaskList" parameterType="WaterSampleTask" resultMap="WaterSampleTaskResult">
+        <include refid="selectWaterSampleTaskVo"/>
+        <where>  
+            <if test="taskCode != null  and taskCode != ''"> and task_code = #{taskCode}</if>
+            <if test="taskName != null  and taskName != ''"> and task_name like concat('%', #{taskName}, '%')</if>
+            <if test="operator != null  and operator != ''"> and operator = #{operator}</if>
+            <if test="scheduleTime != null "> and schedule_time = #{scheduleTime}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="finishTime != null "> and finish_time = #{finishTime}</if>
+            <if test="taskStatus != null "> and task_status = #{taskStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectWaterSampleTaskByPkId" parameterType="Long" resultMap="WaterSampleTaskResult">
+        <include refid="selectWaterSampleTaskVo"/>
+        where pk_id = #{pkId}
+    </select>
+
+    <insert id="insertWaterSampleTask" parameterType="WaterSampleTask">
+        insert into water_sample_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">pk_id,</if>
+            <if test="taskCode != null">task_code,</if>
+            <if test="taskName != null">task_name,</if>
+            <if test="operator != null">operator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="scheduleTime != null">schedule_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="taskStatus != null">task_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="taskCode != null">#{taskCode},</if>
+            <if test="taskName != null">#{taskName},</if>
+            <if test="operator != null">#{operator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="scheduleTime != null">#{scheduleTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="taskStatus != null">#{taskStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWaterSampleTask" parameterType="WaterSampleTask">
+        update water_sample_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskCode != null">task_code = #{taskCode},</if>
+            <if test="taskName != null">task_name = #{taskName},</if>
+            <if test="operator != null">operator = #{operator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="scheduleTime != null">schedule_time = #{scheduleTime},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="taskStatus != null">task_status = #{taskStatus},</if>
+        </trim>
+        where pk_id = #{pkId}
+    </update>
+
+    <delete id="deleteWaterSampleTaskByPkId" parameterType="Long">
+        delete from water_sample_task where pk_id = #{pkId}
+    </delete>
+
+    <delete id="deleteWaterSampleTaskByPkIds" parameterType="String">
+        delete from water_sample_task where pk_id in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

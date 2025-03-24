@@ -1,0 +1,48 @@
+services:
+  mysql:
+    image: mysql
+    ports:
+      - "23306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ry
+      MYSQL_USER: ruoyi
+      MYSQL_PASSWORD: ruoyi123456
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./ruoyi/mysql:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis
+    ports:
+      - "6379"
+    restart: always
+  
+  ruoyi-admin:
+    image: hwjdk:21
+    ports:
+      - "28080:8080"
+    restart: always
+    volumes:
+      - ./ruoyi/java:/jars
+      - ./ruoyi/uploadPath:/var/ruoyi/uploadPath
+    command: ["-Xmx1024m", "-jar", "/jars/ruoyi-admin.jar"]
+
+  ruoyi-ui:
+    image: nginx
+    ports:
+      - "20080:80"
+    restart: always
+    volumes:
+      - ./ruoyi/nginx-conf.d:/etc/nginx/conf.d
+      - ./ruoyi/ui:/usr/share/nginx/html
+
+  ruoyi-vue3:
+    image: nginx
+    ports:
+      - "22080:80"
+    restart: always
+    volumes:
+      - ./ruoyi/nginx-conf.d:/etc/nginx/conf.d
+      - ./ruoyi/ui-vue3:/usr/share/nginx/html
