@@ -9,6 +9,15 @@ export function list${BusinessName}(query) {
   })
 }
 
+// 查询${functionName}列表（不分页）
+export function list${BusinessName}All(query) {
+  return request({
+    url: '/${moduleName}/${businessName}/listall',
+    method: 'get',
+    params: query
+  })
+}
+
 // 查询${functionName}详细
 export function get${BusinessName}(${pkColumn.javaField}) {
   return request({
