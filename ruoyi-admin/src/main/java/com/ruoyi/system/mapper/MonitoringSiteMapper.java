@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.MonitoringSite;
  * 监测站点Mapper接口
  * 
  * @author ruoyi
- * @date 2025-03-24
+ * @date 2025-03-25
  */
 public interface MonitoringSiteMapper 
 {

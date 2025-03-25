@@ -14,10 +14,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="longitude"    column="longitude"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="siteCode"    column="site_code"    />
+        <result property="address"    column="address"    />
+        <result property="manager"    column="manager"    />
+        <result property="phone"    column="phone"    />
     </resultMap>
 
     <sql id="selectMonitoringSiteVo">
-        select site_id, site_name, site_type, status, create_by, create_time, update_by, update_time, remark from monitoring_site
+        select site_id, site_name, site_type, status, create_by, create_time, update_by, update_time, remark, longitude, latitude, site_code, address, manager, phone from monitoring_site
     </sql>
 
     <select id="selectMonitoringSiteList" parameterType="MonitoringSite" resultMap="MonitoringSiteResult">
@@ -26,6 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="siteName != null  and siteName != ''"> and site_name like concat('%', #{siteName}, '%')</if>
             <if test="siteType != null  and siteType != ''"> and site_type = #{siteType}</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="longitude != null "> and longitude = #{longitude}</if>
+            <if test="latitude != null "> and latitude = #{latitude}</if>
+            <if test="siteCode != null  and siteCode != ''"> and site_code = #{siteCode}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="manager != null  and manager != ''"> and manager = #{manager}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
         </where>
     </select>
     
@@ -45,6 +57,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
+            <if test="longitude != null">longitude,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="siteCode != null">site_code,</if>
+            <if test="address != null">address,</if>
+            <if test="manager != null">manager,</if>
+            <if test="phone != null">phone,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="siteName != null">#{siteName},</if>
@@ -55,6 +73,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="siteCode != null">#{siteCode},</if>
+            <if test="address != null">#{address},</if>
+            <if test="manager != null">#{manager},</if>
+            <if test="phone != null">#{phone},</if>
          </trim>
     </insert>
 
@@ -69,6 +93,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="siteCode != null">site_code = #{siteCode},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="manager != null">manager = #{manager},</if>
+            <if test="phone != null">phone = #{phone},</if>
         </trim>
         where site_id = #{siteId}
     </update>

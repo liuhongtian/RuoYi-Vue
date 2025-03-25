@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+//import com.github.pagehelper.PageHelper;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -25,7 +27,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 监测站点Controller
  * 
  * @author ruoyi
- * @date 2025-03-24
+ * @date 2025-03-25
  */
 @RestController
 @RequestMapping("/system/site")
@@ -33,6 +35,18 @@ public class MonitoringSiteController extends BaseController
 {
     @Autowired
     private IMonitoringSiteService monitoringSiteService;
+
+    /**
+     * 查询监测站点列表（不分页）
+     */
+    @PreAuthorize("@ss.hasPermi('system:site:list')")
+    @GetMapping("/listall")
+    public TableDataInfo listAll(MonitoringSite monitoringSite)
+    {
+        //PageHelper.clearPage();
+        List<MonitoringSite> list = monitoringSiteService.selectMonitoringSiteList(monitoringSite);
+        return getDataTable(list);
+    }
 
     /**
      * 查询监测站点列表
