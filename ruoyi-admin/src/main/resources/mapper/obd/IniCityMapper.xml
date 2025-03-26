@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.IniCityMapper">
+    
+    <resultMap type="IniCity" id="IniCityResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="seqNo"    column="Seq_No"    />
+        <result property="provinceId"    column="Province_ID"    />
+        <result property="countryId"    column="Country_ID"    />
+        <result property="acityId"    column="ACity_ID"    />
+        <result property="cityId"    column="City_ID"    />
+        <result property="cityName"    column="City_Name"    />
+        <result property="telDistCode"    column="Tel_Dist_Code"    />
+        <result property="postCode"    column="Post_Code"    />
+    </resultMap>
+
+    <sql id="selectIniCityVo">
+        select PK_ID, Seq_No, Province_ID, Country_ID, ACity_ID, City_ID, City_Name, Tel_Dist_Code, Post_Code from Ini_City
+    </sql>
+
+    <select id="selectIniCityList" parameterType="IniCity" resultMap="IniCityResult">
+        <include refid="selectIniCityVo"/>
+        <where>  
+            <if test="seqNo != null "> and Seq_No = #{seqNo}</if>
+            <if test="provinceId != null  and provinceId != ''"> and Province_ID = #{provinceId}</if>
+            <if test="cityId != null  and cityId != ''"> and City_ID = #{cityId}</if>
+            <if test="cityName != null  and cityName != ''"> and City_Name like concat('%', #{cityName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectIniCityByPkId" parameterType="Long" resultMap="IniCityResult">
+        <include refid="selectIniCityVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertIniCity" parameterType="IniCity" useGeneratedKeys="true" keyProperty="pkId">
+        insert into Ini_City
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No,</if>
+            <if test="provinceId != null">Province_ID,</if>
+            <if test="countryId != null">Country_ID,</if>
+            <if test="acityId != null">ACity_ID,</if>
+            <if test="cityId != null">City_ID,</if>
+            <if test="cityName != null">City_Name,</if>
+            <if test="telDistCode != null">Tel_Dist_Code,</if>
+            <if test="postCode != null">Post_Code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">#{seqNo},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="countryId != null">#{countryId},</if>
+            <if test="acityId != null">#{acityId},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="cityName != null">#{cityName},</if>
+            <if test="telDistCode != null">#{telDistCode},</if>
+            <if test="postCode != null">#{postCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIniCity" parameterType="IniCity">
+        update Ini_City
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No = #{seqNo},</if>
+            <if test="provinceId != null">Province_ID = #{provinceId},</if>
+            <if test="countryId != null">Country_ID = #{countryId},</if>
+            <if test="acityId != null">ACity_ID = #{acityId},</if>
+            <if test="cityId != null">City_ID = #{cityId},</if>
+            <if test="cityName != null">City_Name = #{cityName},</if>
+            <if test="telDistCode != null">Tel_Dist_Code = #{telDistCode},</if>
+            <if test="postCode != null">Post_Code = #{postCode},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteIniCityByPkId" parameterType="Long">
+        delete from Ini_City where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteIniCityByPkIds" parameterType="String">
+        delete from Ini_City where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

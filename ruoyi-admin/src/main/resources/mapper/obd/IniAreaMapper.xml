@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.IniAreaMapper">
+    
+    <resultMap type="IniArea" id="IniAreaResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="seqNo"    column="Seq_No"    />
+        <result property="areaId"    column="Area_ID"    />
+        <result property="areaName"    column="Area_Name"    />
+    </resultMap>
+
+    <sql id="selectIniAreaVo">
+        select PK_ID, Seq_No, Area_ID, Area_Name from Ini_Area
+    </sql>
+
+    <select id="selectIniAreaList" parameterType="IniArea" resultMap="IniAreaResult">
+        <include refid="selectIniAreaVo"/>
+        <where>  
+            <if test="seqNo != null "> and Seq_No = #{seqNo}</if>
+            <if test="areaId != null  and areaId != ''"> and Area_ID = #{areaId}</if>
+            <if test="areaName != null  and areaName != ''"> and Area_Name like concat('%', #{areaName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectIniAreaByPkId" parameterType="Long" resultMap="IniAreaResult">
+        <include refid="selectIniAreaVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertIniArea" parameterType="IniArea" useGeneratedKeys="true" keyProperty="pkId">
+        insert into Ini_Area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No,</if>
+            <if test="areaId != null">Area_ID,</if>
+            <if test="areaName != null">Area_Name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">#{seqNo},</if>
+            <if test="areaId != null">#{areaId},</if>
+            <if test="areaName != null">#{areaName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIniArea" parameterType="IniArea">
+        update Ini_Area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No = #{seqNo},</if>
+            <if test="areaId != null">Area_ID = #{areaId},</if>
+            <if test="areaName != null">Area_Name = #{areaName},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteIniAreaByPkId" parameterType="Long">
+        delete from Ini_Area where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteIniAreaByPkIds" parameterType="String">
+        delete from Ini_Area where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

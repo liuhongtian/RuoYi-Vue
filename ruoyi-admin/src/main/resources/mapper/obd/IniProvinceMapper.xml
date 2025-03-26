@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.IniProvinceMapper">
+    
+    <resultMap type="IniProvince" id="IniProvinceResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="seqNo"    column="Seq_No"    />
+        <result property="countryId"    column="Country_ID"    />
+        <result property="provinceId"    column="Province_ID"    />
+        <result property="provinceName"    column="Province_Name"    />
+    </resultMap>
+
+    <sql id="selectIniProvinceVo">
+        select PK_ID, Seq_No, Country_ID, Province_ID, Province_Name from Ini_Province
+    </sql>
+
+    <select id="selectIniProvinceList" parameterType="IniProvince" resultMap="IniProvinceResult">
+        <include refid="selectIniProvinceVo"/>
+        <where>  
+            <if test="seqNo != null "> and Seq_No = #{seqNo}</if>
+            <if test="provinceId != null  and provinceId != ''"> and Province_ID = #{provinceId}</if>
+            <if test="provinceName != null  and provinceName != ''"> and Province_Name like concat('%', #{provinceName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectIniProvinceByPkId" parameterType="Long" resultMap="IniProvinceResult">
+        <include refid="selectIniProvinceVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertIniProvince" parameterType="IniProvince" useGeneratedKeys="true" keyProperty="pkId">
+        insert into Ini_Province
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No,</if>
+            <if test="countryId != null">Country_ID,</if>
+            <if test="provinceId != null">Province_ID,</if>
+            <if test="provinceName != null">Province_Name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">#{seqNo},</if>
+            <if test="countryId != null">#{countryId},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="provinceName != null">#{provinceName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIniProvince" parameterType="IniProvince">
+        update Ini_Province
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No = #{seqNo},</if>
+            <if test="countryId != null">Country_ID = #{countryId},</if>
+            <if test="provinceId != null">Province_ID = #{provinceId},</if>
+            <if test="provinceName != null">Province_Name = #{provinceName},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteIniProvinceByPkId" parameterType="Long">
+        delete from Ini_Province where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteIniProvinceByPkIds" parameterType="String">
+        delete from Ini_Province where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>
