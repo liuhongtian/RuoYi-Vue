@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.WeatherInfoMapper">
+    
+    <resultMap type="WeatherInfo" id="WeatherInfoResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="weatherDate"    column="weather_date"    />
+        <result property="County"    column="County"    />
+        <result property="Weather"    column="Weather"    />
+        <result property="weatherPrevday"    column="Weather_prevday"    />
+        <result property="Rainfall"    column="Rainfall"    />
+        <result property="Wind"    column="Wind"    />
+    </resultMap>
+
+    <sql id="selectWeatherInfoVo">
+        select PK_ID, weather_date, County, Weather, Weather_prevday, Rainfall, Wind from Weather_Info
+    </sql>
+
+    <select id="selectWeatherInfoList" parameterType="WeatherInfo" resultMap="WeatherInfoResult">
+        <include refid="selectWeatherInfoVo"/>
+        <where>  
+            <if test="weatherDate != null "> and weather_date = #{weatherDate}</if>
+            <if test="County != null  and County != ''"> and County like concat('%', #{County}, '%')</if>
+            <if test="Weather != null  and Weather != ''"> and Weather like concat('%', #{Weather}, '%')</if>
+            <if test="weatherPrevday != null  and weatherPrevday != ''"> and Weather_prevday like concat('%', #{weatherPrevday}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectWeatherInfoByPkId" parameterType="Long" resultMap="WeatherInfoResult">
+        <include refid="selectWeatherInfoVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertWeatherInfo" parameterType="WeatherInfo">
+        insert into Weather_Info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="weatherDate != null">weather_date,</if>
+            <if test="County != null">County,</if>
+            <if test="Weather != null">Weather,</if>
+            <if test="weatherPrevday != null">Weather_prevday,</if>
+            <if test="Rainfall != null">Rainfall,</if>
+            <if test="Wind != null">Wind,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="weatherDate != null">#{weatherDate},</if>
+            <if test="County != null">#{County},</if>
+            <if test="Weather != null">#{Weather},</if>
+            <if test="weatherPrevday != null">#{weatherPrevday},</if>
+            <if test="Rainfall != null">#{Rainfall},</if>
+            <if test="Wind != null">#{Wind},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWeatherInfo" parameterType="WeatherInfo">
+        update Weather_Info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="weatherDate != null">weather_date = #{weatherDate},</if>
+            <if test="County != null">County = #{County},</if>
+            <if test="Weather != null">Weather = #{Weather},</if>
+            <if test="weatherPrevday != null">Weather_prevday = #{weatherPrevday},</if>
+            <if test="Rainfall != null">Rainfall = #{Rainfall},</if>
+            <if test="Wind != null">Wind = #{Wind},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteWeatherInfoByPkId" parameterType="Long">
+        delete from Weather_Info where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteWeatherInfoByPkIds" parameterType="String">
+        delete from Weather_Info where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

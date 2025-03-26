@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.OmCompanyMapper">
+    
+    <resultMap type="OmCompany" id="OmCompanyResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="companyName"    column="Company_Name"    />
+        <result property="province"    column="Province"    />
+        <result property="city"    column="City"    />
+        <result property="address"    column="Address"    />
+    </resultMap>
+
+    <sql id="selectOmCompanyVo">
+        select PK_ID, company_id, Company_Name, Province, City, Address from OM_Company
+    </sql>
+
+    <select id="selectOmCompanyList" parameterType="OmCompany" resultMap="OmCompanyResult">
+        <include refid="selectOmCompanyVo"/>
+        <where>  
+            <if test="companyId != null  and companyId != ''"> and company_id = #{companyId}</if>
+            <if test="companyName != null  and companyName != ''"> and Company_Name like concat('%', #{companyName}, '%')</if>
+            <if test="province != null "> and Province = #{province}</if>
+            <if test="city != null "> and City like concat('%', #{city}, '%')</if>
+            <if test="address != null  and address != ''"> and Address like concat('%', #{address}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectOmCompanyByPkId" parameterType="Long" resultMap="OmCompanyResult">
+        <include refid="selectOmCompanyVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertOmCompany" parameterType="OmCompany">
+        insert into OM_Company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="companyId != null">company_id,</if>
+            <if test="companyName != null">Company_Name,</if>
+            <if test="province != null">Province,</if>
+            <if test="city != null">City,</if>
+            <if test="address != null">Address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="companyId != null">#{companyId},</if>
+            <if test="companyName != null">#{companyName},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="address != null">#{address},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOmCompany" parameterType="OmCompany">
+        update OM_Company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyId != null">company_id = #{companyId},</if>
+            <if test="companyName != null">Company_Name = #{companyName},</if>
+            <if test="province != null">Province = #{province},</if>
+            <if test="city != null">City = #{city},</if>
+            <if test="address != null">Address = #{address},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteOmCompanyByPkId" parameterType="Long">
+        delete from OM_Company where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteOmCompanyByPkIds" parameterType="String">
+        delete from OM_Company where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>
