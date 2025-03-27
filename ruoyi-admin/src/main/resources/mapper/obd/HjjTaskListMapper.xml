@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.HjjTaskListMapper">
+    
+    <resultMap type="HjjTaskList" id="HjjTaskListResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="taskNo"    column="Task_No"    />
+        <result property="taskDate"    column="Task_Date"    />
+        <result property="sectionCode"    column="Section_Code"    />
+        <result property="sectionName"    column="Section_Name"    />
+        <result property="Status"    column="Status"    />
+        <result property="taskContent"    column="Task_Content"    />
+        <result property="companyCode"    column="Company_Code"    />
+        <result property="teamLeader"    column="Team_Leader"    />
+        <result property="teamMembers"    column="Team_Members"    />
+        <result property="vehicleLicence"    column="Vehicle_Licence"    />
+        <result property="cfPlace"    column="CF_Place"    />
+        <result property="cfTime"    column="CF_Time"    />
+        <result property="arrivalDistance"    column="Arrival_Distance"    />
+        <result property="plannedTravelDuration"    column="Planned_Travel_Duration"    />
+        <result property="plannedWorkDuration"    column="Planned_Work_Duration"    />
+        <result property="plannedStartTime"    column="Planned_Start_Time"    />
+        <result property="plannedEndTime"    column="Planned_End_Time"    />
+        <result property="syPlace"    column="SY_Place"    />
+        <result property="plannedSyTime"    column="Planned_SY_Time"    />
+        <result property="apsTime"    column="APS_Time"    />
+        <result property="confirmTime"    column="Confirm_Time"    />
+        <result property="confirmUser"    column="Confirm_User"    />
+        <result property="auditTime"    column="Audit_Time"    />
+        <result property="auditUser"    column="Audit_User"    />
+        <result property="releaseTime"    column="Release_Time"    />
+        <result property="releaseUser"    column="Release_User"    />
+        <result property="testStation"    column="Test_Station"    />
+        <result property="clockIn"    column="Clock_In"    />
+        <result property="cyTaskNo"    column="CY_Task_No"    />
+        <result property="ypfxTime"    column="YPFX_Time"    />
+        <result property="actualSyTime"    column="Actual_SY_Time"    />
+        <result property="transportUser"    column="Transport_User"    />
+        <result property="transportLicence"    column="Transport_Licence"    />
+        <result property="transportTaskNo"    column="Transport_Task_No"    />
+        <result property="plannedTestStationTime"    column="Planned_Test_Station_Time"    />
+        <result property="actualTestStationTime"    column="Actual_Test_Station_Time"    />
+        <result property="testResultTime"    column="Test_Result_Time"    />
+        <result property="testTaskNo"    column="Test_Task_No"    />
+        <result property="testResult"    column="Test_Result"    />
+        <result property="cyTaskStatus"    column="CY_Task_Status"    />
+        <result property="docId"    column="Doc_ID"    />
+    </resultMap>
+
+    <sql id="selectHjjTaskListVo">
+        select PK_ID, Task_No, Task_Date, Section_Code, Section_Name, Status, Task_Content, Company_Code, Team_Leader, Team_Members, Vehicle_Licence, CF_Place, CF_Time, Arrival_Distance, Planned_Travel_Duration, Planned_Work_Duration, Planned_Start_Time, Planned_End_Time, SY_Place, Planned_SY_Time, APS_Time, Confirm_Time, Confirm_User, Audit_Time, Audit_User, Release_Time, Release_User, Test_Station, Clock_In, CY_Task_No, YPFX_Time, Actual_SY_Time, Transport_User, Transport_Licence, Transport_Task_No, Planned_Test_Station_Time, Actual_Test_Station_Time, Test_Result_Time, Test_Task_No, Test_Result, CY_Task_Status, Doc_ID from Hjj_Task_List
+    </sql>
+
+    <select id="selectHjjTaskListList" parameterType="HjjTaskList" resultMap="HjjTaskListResult">
+        <include refid="selectHjjTaskListVo"/>
+        <where>  
+            <if test="taskNo != null  and taskNo != ''"> and Task_No = #{taskNo}</if>
+            <if test="taskDate != null  and taskDate != ''"> and Task_Date = #{taskDate}</if>
+            <if test="sectionCode != null  and sectionCode != ''"> and Section_Code = #{sectionCode}</if>
+            <if test="sectionName != null  and sectionName != ''"> and Section_Name like concat('%', #{sectionName}, '%')</if>
+            <if test="Status != null  and Status != ''"> and Status = #{Status}</if>
+            <if test="companyCode != null  and companyCode != ''"> and Company_Code = #{companyCode}</if>
+            <if test="teamLeader != null  and teamLeader != ''"> and Team_Leader = #{teamLeader}</if>
+            <if test="teamMembers != null  and teamMembers != ''"> and Team_Members = #{teamMembers}</if>
+            <if test="vehicleLicence != null  and vehicleLicence != ''"> and Vehicle_Licence = #{vehicleLicence}</if>
+            <if test="cfPlace != null  and cfPlace != ''"> and CF_Place = #{cfPlace}</if>
+            <if test="cfTime != null "> and CF_Time = #{cfTime}</if>
+            <if test="arrivalDistance != null "> and Arrival_Distance = #{arrivalDistance}</if>
+            <if test="plannedTravelDuration != null "> and Planned_Travel_Duration = #{plannedTravelDuration}</if>
+            <if test="plannedEndTime != null "> and Planned_End_Time = #{plannedEndTime}</if>
+            <if test="syPlace != null  and syPlace != ''"> and SY_Place = #{syPlace}</if>
+            <if test="plannedSyTime != null "> and Planned_SY_Time = #{plannedSyTime}</if>
+            <if test="apsTime != null "> and APS_Time = #{apsTime}</if>
+            <if test="confirmTime != null "> and Confirm_Time = #{confirmTime}</if>
+            <if test="confirmUser != null  and confirmUser != ''"> and Confirm_User = #{confirmUser}</if>
+            <if test="auditTime != null "> and Audit_Time = #{auditTime}</if>
+            <if test="auditUser != null  and auditUser != ''"> and Audit_User = #{auditUser}</if>
+            <if test="releaseTime != null "> and Release_Time = #{releaseTime}</if>
+            <if test="releaseUser != null  and releaseUser != ''"> and Release_User = #{releaseUser}</if>
+            <if test="testStation != null  and testStation != ''"> and Test_Station = #{testStation}</if>
+            <if test="clockIn != null "> and Clock_In = #{clockIn}</if>
+            <if test="cyTaskNo != null  and cyTaskNo != ''"> and CY_Task_No = #{cyTaskNo}</if>
+            <if test="ypfxTime != null "> and YPFX_Time = #{ypfxTime}</if>
+            <if test="actualSyTime != null "> and Actual_SY_Time = #{actualSyTime}</if>
+            <if test="transportUser != null  and transportUser != ''"> and Transport_User = #{transportUser}</if>
+            <if test="transportLicence != null  and transportLicence != ''"> and Transport_Licence = #{transportLicence}</if>
+            <if test="transportTaskNo != null  and transportTaskNo != ''"> and Transport_Task_No = #{transportTaskNo}</if>
+            <if test="plannedTestStationTime != null "> and Planned_Test_Station_Time = #{plannedTestStationTime}</if>
+            <if test="actualTestStationTime != null "> and Actual_Test_Station_Time = #{actualTestStationTime}</if>
+            <if test="testResultTime != null "> and Test_Result_Time = #{testResultTime}</if>
+            <if test="testTaskNo != null  and testTaskNo != ''"> and Test_Task_No = #{testTaskNo}</if>
+            <if test="testResult != null  and testResult != ''"> and Test_Result = #{testResult}</if>
+            <if test="cyTaskStatus != null  and cyTaskStatus != ''"> and CY_Task_Status = #{cyTaskStatus}</if>
+            <if test="docId != null "> and Doc_ID = #{docId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHjjTaskListByPkId" parameterType="Long" resultMap="HjjTaskListResult">
+        <include refid="selectHjjTaskListVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertHjjTaskList" parameterType="HjjTaskList">
+        insert into Hjj_Task_List
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="taskNo != null">Task_No,</if>
+            <if test="taskDate != null">Task_Date,</if>
+            <if test="sectionCode != null">Section_Code,</if>
+            <if test="sectionName != null">Section_Name,</if>
+            <if test="Status != null">Status,</if>
+            <if test="taskContent != null">Task_Content,</if>
+            <if test="companyCode != null">Company_Code,</if>
+            <if test="teamLeader != null">Team_Leader,</if>
+            <if test="teamMembers != null">Team_Members,</if>
+            <if test="vehicleLicence != null">Vehicle_Licence,</if>
+            <if test="cfPlace != null">CF_Place,</if>
+            <if test="cfTime != null">CF_Time,</if>
+            <if test="arrivalDistance != null">Arrival_Distance,</if>
+            <if test="plannedTravelDuration != null">Planned_Travel_Duration,</if>
+            <if test="plannedWorkDuration != null">Planned_Work_Duration,</if>
+            <if test="plannedStartTime != null">Planned_Start_Time,</if>
+            <if test="plannedEndTime != null">Planned_End_Time,</if>
+            <if test="syPlace != null">SY_Place,</if>
+            <if test="plannedSyTime != null">Planned_SY_Time,</if>
+            <if test="apsTime != null">APS_Time,</if>
+            <if test="confirmTime != null">Confirm_Time,</if>
+            <if test="confirmUser != null">Confirm_User,</if>
+            <if test="auditTime != null">Audit_Time,</if>
+            <if test="auditUser != null">Audit_User,</if>
+            <if test="releaseTime != null">Release_Time,</if>
+            <if test="releaseUser != null">Release_User,</if>
+            <if test="testStation != null">Test_Station,</if>
+            <if test="clockIn != null">Clock_In,</if>
+            <if test="cyTaskNo != null">CY_Task_No,</if>
+            <if test="ypfxTime != null">YPFX_Time,</if>
+            <if test="actualSyTime != null">Actual_SY_Time,</if>
+            <if test="transportUser != null">Transport_User,</if>
+            <if test="transportLicence != null">Transport_Licence,</if>
+            <if test="transportTaskNo != null">Transport_Task_No,</if>
+            <if test="plannedTestStationTime != null">Planned_Test_Station_Time,</if>
+            <if test="actualTestStationTime != null">Actual_Test_Station_Time,</if>
+            <if test="testResultTime != null">Test_Result_Time,</if>
+            <if test="testTaskNo != null">Test_Task_No,</if>
+            <if test="testResult != null">Test_Result,</if>
+            <if test="cyTaskStatus != null">CY_Task_Status,</if>
+            <if test="docId != null">Doc_ID,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="taskNo != null">#{taskNo},</if>
+            <if test="taskDate != null">#{taskDate},</if>
+            <if test="sectionCode != null">#{sectionCode},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="Status != null">#{Status},</if>
+            <if test="taskContent != null">#{taskContent},</if>
+            <if test="companyCode != null">#{companyCode},</if>
+            <if test="teamLeader != null">#{teamLeader},</if>
+            <if test="teamMembers != null">#{teamMembers},</if>
+            <if test="vehicleLicence != null">#{vehicleLicence},</if>
+            <if test="cfPlace != null">#{cfPlace},</if>
+            <if test="cfTime != null">#{cfTime},</if>
+            <if test="arrivalDistance != null">#{arrivalDistance},</if>
+            <if test="plannedTravelDuration != null">#{plannedTravelDuration},</if>
+            <if test="plannedWorkDuration != null">#{plannedWorkDuration},</if>
+            <if test="plannedStartTime != null">#{plannedStartTime},</if>
+            <if test="plannedEndTime != null">#{plannedEndTime},</if>
+            <if test="syPlace != null">#{syPlace},</if>
+            <if test="plannedSyTime != null">#{plannedSyTime},</if>
+            <if test="apsTime != null">#{apsTime},</if>
+            <if test="confirmTime != null">#{confirmTime},</if>
+            <if test="confirmUser != null">#{confirmUser},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="auditUser != null">#{auditUser},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+            <if test="releaseUser != null">#{releaseUser},</if>
+            <if test="testStation != null">#{testStation},</if>
+            <if test="clockIn != null">#{clockIn},</if>
+            <if test="cyTaskNo != null">#{cyTaskNo},</if>
+            <if test="ypfxTime != null">#{ypfxTime},</if>
+            <if test="actualSyTime != null">#{actualSyTime},</if>
+            <if test="transportUser != null">#{transportUser},</if>
+            <if test="transportLicence != null">#{transportLicence},</if>
+            <if test="transportTaskNo != null">#{transportTaskNo},</if>
+            <if test="plannedTestStationTime != null">#{plannedTestStationTime},</if>
+            <if test="actualTestStationTime != null">#{actualTestStationTime},</if>
+            <if test="testResultTime != null">#{testResultTime},</if>
+            <if test="testTaskNo != null">#{testTaskNo},</if>
+            <if test="testResult != null">#{testResult},</if>
+            <if test="cyTaskStatus != null">#{cyTaskStatus},</if>
+            <if test="docId != null">#{docId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHjjTaskList" parameterType="HjjTaskList">
+        update Hjj_Task_List
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskNo != null">Task_No = #{taskNo},</if>
+            <if test="taskDate != null">Task_Date = #{taskDate},</if>
+            <if test="sectionCode != null">Section_Code = #{sectionCode},</if>
+            <if test="sectionName != null">Section_Name = #{sectionName},</if>
+            <if test="Status != null">Status = #{Status},</if>
+            <if test="taskContent != null">Task_Content = #{taskContent},</if>
+            <if test="companyCode != null">Company_Code = #{companyCode},</if>
+            <if test="teamLeader != null">Team_Leader = #{teamLeader},</if>
+            <if test="teamMembers != null">Team_Members = #{teamMembers},</if>
+            <if test="vehicleLicence != null">Vehicle_Licence = #{vehicleLicence},</if>
+            <if test="cfPlace != null">CF_Place = #{cfPlace},</if>
+            <if test="cfTime != null">CF_Time = #{cfTime},</if>
+            <if test="arrivalDistance != null">Arrival_Distance = #{arrivalDistance},</if>
+            <if test="plannedTravelDuration != null">Planned_Travel_Duration = #{plannedTravelDuration},</if>
+            <if test="plannedWorkDuration != null">Planned_Work_Duration = #{plannedWorkDuration},</if>
+            <if test="plannedStartTime != null">Planned_Start_Time = #{plannedStartTime},</if>
+            <if test="plannedEndTime != null">Planned_End_Time = #{plannedEndTime},</if>
+            <if test="syPlace != null">SY_Place = #{syPlace},</if>
+            <if test="plannedSyTime != null">Planned_SY_Time = #{plannedSyTime},</if>
+            <if test="apsTime != null">APS_Time = #{apsTime},</if>
+            <if test="confirmTime != null">Confirm_Time = #{confirmTime},</if>
+            <if test="confirmUser != null">Confirm_User = #{confirmUser},</if>
+            <if test="auditTime != null">Audit_Time = #{auditTime},</if>
+            <if test="auditUser != null">Audit_User = #{auditUser},</if>
+            <if test="releaseTime != null">Release_Time = #{releaseTime},</if>
+            <if test="releaseUser != null">Release_User = #{releaseUser},</if>
+            <if test="testStation != null">Test_Station = #{testStation},</if>
+            <if test="clockIn != null">Clock_In = #{clockIn},</if>
+            <if test="cyTaskNo != null">CY_Task_No = #{cyTaskNo},</if>
+            <if test="ypfxTime != null">YPFX_Time = #{ypfxTime},</if>
+            <if test="actualSyTime != null">Actual_SY_Time = #{actualSyTime},</if>
+            <if test="transportUser != null">Transport_User = #{transportUser},</if>
+            <if test="transportLicence != null">Transport_Licence = #{transportLicence},</if>
+            <if test="transportTaskNo != null">Transport_Task_No = #{transportTaskNo},</if>
+            <if test="plannedTestStationTime != null">Planned_Test_Station_Time = #{plannedTestStationTime},</if>
+            <if test="actualTestStationTime != null">Actual_Test_Station_Time = #{actualTestStationTime},</if>
+            <if test="testResultTime != null">Test_Result_Time = #{testResultTime},</if>
+            <if test="testTaskNo != null">Test_Task_No = #{testTaskNo},</if>
+            <if test="testResult != null">Test_Result = #{testResult},</if>
+            <if test="cyTaskStatus != null">CY_Task_Status = #{cyTaskStatus},</if>
+            <if test="docId != null">Doc_ID = #{docId},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteHjjTaskListByPkId" parameterType="Long">
+        delete from Hjj_Task_List where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteHjjTaskListByPkIds" parameterType="String">
+        delete from Hjj_Task_List where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>
