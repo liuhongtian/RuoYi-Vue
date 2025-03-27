@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.IniProvince2Mapper">
+    
+    <resultMap type="IniProvince2" id="IniProvince2Result">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="seqNo"    column="Seq_No"    />
+        <result property="countryId"    column="Country_ID"    />
+        <result property="provinceId"    column="Province_ID"    />
+        <result property="provinceName"    column="Province_Name"    />
+    </resultMap>
+
+    <resultMap id="IniProvince2IniCityResult" type="IniProvince2" extends="IniProvince2Result">
+        <collection property="iniCityList" ofType="IniCity" column="Province_ID" select="selectIniCityList" />
+    </resultMap>
+
+    <resultMap type="IniCity" id="IniCityResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="seqNo"    column="Seq_No"    />
+        <result property="provinceId"    column="Province_ID"    />
+        <result property="countryId"    column="Country_ID"    />
+        <result property="acityId"    column="ACity_ID"    />
+        <result property="cityId"    column="City_ID"    />
+        <result property="cityName"    column="City_Name"    />
+        <result property="telDistCode"    column="Tel_Dist_Code"    />
+        <result property="postCode"    column="Post_Code"    />
+    </resultMap>
+
+    <sql id="selectIniProvince2Vo">
+        select PK_ID, Seq_No, Country_ID, Province_ID, Province_Name from Ini_Province
+    </sql>
+
+    <select id="selectIniProvince2List" parameterType="IniProvince2" resultMap="IniProvince2Result">
+        <include refid="selectIniProvince2Vo"/>
+        <where>  
+            <if test="seqNo != null "> and Seq_No = #{seqNo}</if>
+            <if test="provinceId != null  and provinceId != ''"> and Province_ID = #{provinceId}</if>
+            <if test="provinceName != null  and provinceName != ''"> and Province_Name like concat('%', #{provinceName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectIniProvince2ByPkId" parameterType="Long" resultMap="IniProvince2IniCityResult">
+        select PK_ID, Seq_No, Country_ID, Province_ID, Province_Name
+        from Ini_Province
+        where PK_ID = #{pkId}
+    </select>
+
+    <select id="selectIniCityList" resultMap="IniCityResult">
+        select PK_ID, Seq_No, Province_ID, Country_ID, ACity_ID, City_ID, City_Name, Tel_Dist_Code, Post_Code
+        from Ini_City
+        where Province_ID = #{Province_ID}
+    </select>
+
+    <insert id="insertIniProvince2" parameterType="IniProvince2" useGeneratedKeys="true" keyProperty="pkId">
+        insert into Ini_Province
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No,</if>
+            <if test="countryId != null">Country_ID,</if>
+            <if test="provinceId != null">Province_ID,</if>
+            <if test="provinceName != null">Province_Name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="seqNo != null">#{seqNo},</if>
+            <if test="countryId != null">#{countryId},</if>
+            <if test="provinceId != null">#{provinceId},</if>
+            <if test="provinceName != null">#{provinceName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIniProvince2" parameterType="IniProvince2">
+        update Ini_Province
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="seqNo != null">Seq_No = #{seqNo},</if>
+            <if test="countryId != null">Country_ID = #{countryId},</if>
+            <if test="provinceId != null">Province_ID = #{provinceId},</if>
+            <if test="provinceName != null">Province_Name = #{provinceName},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteIniProvince2ByPkId" parameterType="Long">
+        delete from Ini_Province where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteIniProvince2ByPkIds" parameterType="String">
+        delete from Ini_Province where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteIniCityByProvinceIds" parameterType="String">
+        delete from Ini_City where Province_ID in 
+        <foreach item="provinceId" collection="array" open="(" separator="," close=")">
+            #{provinceId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteIniCityByProvinceId" parameterType="String">
+        delete from Ini_City where Province_ID = #{provinceId}
+    </delete>
+
+    <insert id="batchIniCity">
+        insert into Ini_City( PK_ID, Seq_No, Province_ID, Country_ID, ACity_ID, City_ID, City_Name, Tel_Dist_Code, Post_Code) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.pkId}, #{item.seqNo}, #{item.provinceId}, #{item.countryId}, #{item.acityId}, #{item.cityId}, #{item.cityName}, #{item.telDistCode}, #{item.postCode})
+        </foreach>
+    </insert>
+</mapper>

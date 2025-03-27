@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.RiverBasinMapper">
+    
+    <resultMap type="RiverBasin" id="RiverBasinResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="riverBasinCode"    column="River_Basin_Code"    />
+        <result property="riverBasinName"    column="River_Basin_Name"    />
+    </resultMap>
+
+    <sql id="selectRiverBasinVo">
+        select PK_ID, River_Basin_Code, River_Basin_Name from River_Basin
+    </sql>
+
+    <select id="selectRiverBasinList" parameterType="RiverBasin" resultMap="RiverBasinResult">
+        <include refid="selectRiverBasinVo"/>
+        <where>  
+            <if test="riverBasinCode != null  and riverBasinCode != ''"> and River_Basin_Code = #{riverBasinCode}</if>
+            <if test="riverBasinName != null  and riverBasinName != ''"> and River_Basin_Name like concat('%', #{riverBasinName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectRiverBasinByPkId" parameterType="Long" resultMap="RiverBasinResult">
+        <include refid="selectRiverBasinVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertRiverBasin" parameterType="RiverBasin">
+        insert into River_Basin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="riverBasinCode != null">River_Basin_Code,</if>
+            <if test="riverBasinName != null">River_Basin_Name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="riverBasinCode != null">#{riverBasinCode},</if>
+            <if test="riverBasinName != null">#{riverBasinName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRiverBasin" parameterType="RiverBasin">
+        update River_Basin
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="riverBasinCode != null">River_Basin_Code = #{riverBasinCode},</if>
+            <if test="riverBasinName != null">River_Basin_Name = #{riverBasinName},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteRiverBasinByPkId" parameterType="Long">
+        delete from River_Basin where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteRiverBasinByPkIds" parameterType="String">
+        delete from River_Basin where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

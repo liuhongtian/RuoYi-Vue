@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.AquaticInfoMapper">
+    
+    <resultMap type="AquaticInfo" id="AquaticInfoResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="aquaticCode"    column="Aquatic_Code"    />
+        <result property="aquaticName"    column="Aquatic_Name"    />
+    </resultMap>
+
+    <sql id="selectAquaticInfoVo">
+        select PK_ID, Aquatic_Code, Aquatic_Name from Aquatic_Info
+    </sql>
+
+    <select id="selectAquaticInfoList" parameterType="AquaticInfo" resultMap="AquaticInfoResult">
+        <include refid="selectAquaticInfoVo"/>
+        <where>  
+            <if test="aquaticCode != null  and aquaticCode != ''"> and Aquatic_Code = #{aquaticCode}</if>
+            <if test="aquaticName != null  and aquaticName != ''"> and Aquatic_Name like concat('%', #{aquaticName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAquaticInfoByPkId" parameterType="Long" resultMap="AquaticInfoResult">
+        <include refid="selectAquaticInfoVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertAquaticInfo" parameterType="AquaticInfo">
+        insert into Aquatic_Info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="aquaticCode != null">Aquatic_Code,</if>
+            <if test="aquaticName != null">Aquatic_Name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="aquaticCode != null">#{aquaticCode},</if>
+            <if test="aquaticName != null">#{aquaticName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAquaticInfo" parameterType="AquaticInfo">
+        update Aquatic_Info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="aquaticCode != null">Aquatic_Code = #{aquaticCode},</if>
+            <if test="aquaticName != null">Aquatic_Name = #{aquaticName},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteAquaticInfoByPkId" parameterType="Long">
+        delete from Aquatic_Info where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteAquaticInfoByPkIds" parameterType="String">
+        delete from Aquatic_Info where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

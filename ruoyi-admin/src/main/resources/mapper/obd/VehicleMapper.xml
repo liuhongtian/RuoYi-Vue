@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.VehicleMapper">
+    
+    <resultMap type="Vehicle" id="VehicleResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="licenseNumber"    column="License_Number"    />
+        <result property="vehicleType"    column="Vehicle_Type"    />
+        <result property="Firm"    column="Firm"    />
+        <result property="Station"    column="Station"    />
+        <result property="officeCode"    column="Office_Code"    />
+        <result property="vehicleStatus"    column="Vehicle_Status"    />
+        <result property="serviceLife"    column="Service_Life"    />
+        <result property="capacity"    column="capacity"    />
+    </resultMap>
+
+    <sql id="selectVehicleVo">
+        select PK_ID, License_Number, Vehicle_Type, Firm, Station, Office_Code, Vehicle_Status, Service_Life, capacity from Vehicle
+    </sql>
+
+    <select id="selectVehicleList" parameterType="Vehicle" resultMap="VehicleResult">
+        <include refid="selectVehicleVo"/>
+        <where>  
+            <if test="licenseNumber != null  and licenseNumber != ''"> and License_Number = #{licenseNumber}</if>
+            <if test="vehicleType != null "> and Vehicle_Type = #{vehicleType}</if>
+            <if test="Firm != null  and Firm != ''"> and Firm = #{Firm}</if>
+            <if test="Station != null  and Station != ''"> and Station like concat('%', #{Station}, '%')</if>
+            <if test="officeCode != null  and officeCode != ''"> and Office_Code = #{officeCode}</if>
+            <if test="vehicleStatus != null "> and Vehicle_Status = #{vehicleStatus}</if>
+            <if test="serviceLife != null "> and Service_Life = #{serviceLife}</if>
+            <if test="capacity != null "> and capacity = #{capacity}</if>
+        </where>
+    </select>
+    
+    <select id="selectVehicleByPkId" parameterType="Long" resultMap="VehicleResult">
+        <include refid="selectVehicleVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertVehicle" parameterType="Vehicle">
+        insert into Vehicle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="licenseNumber != null">License_Number,</if>
+            <if test="vehicleType != null">Vehicle_Type,</if>
+            <if test="Firm != null">Firm,</if>
+            <if test="Station != null">Station,</if>
+            <if test="officeCode != null">Office_Code,</if>
+            <if test="vehicleStatus != null">Vehicle_Status,</if>
+            <if test="serviceLife != null">Service_Life,</if>
+            <if test="capacity != null">capacity,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="licenseNumber != null">#{licenseNumber},</if>
+            <if test="vehicleType != null">#{vehicleType},</if>
+            <if test="Firm != null">#{Firm},</if>
+            <if test="Station != null">#{Station},</if>
+            <if test="officeCode != null">#{officeCode},</if>
+            <if test="vehicleStatus != null">#{vehicleStatus},</if>
+            <if test="serviceLife != null">#{serviceLife},</if>
+            <if test="capacity != null">#{capacity},</if>
+         </trim>
+    </insert>
+
+    <update id="updateVehicle" parameterType="Vehicle">
+        update Vehicle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="licenseNumber != null">License_Number = #{licenseNumber},</if>
+            <if test="vehicleType != null">Vehicle_Type = #{vehicleType},</if>
+            <if test="Firm != null">Firm = #{Firm},</if>
+            <if test="Station != null">Station = #{Station},</if>
+            <if test="officeCode != null">Office_Code = #{officeCode},</if>
+            <if test="vehicleStatus != null">Vehicle_Status = #{vehicleStatus},</if>
+            <if test="serviceLife != null">Service_Life = #{serviceLife},</if>
+            <if test="capacity != null">capacity = #{capacity},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteVehicleByPkId" parameterType="Long">
+        delete from Vehicle where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteVehicleByPkIds" parameterType="String">
+        delete from Vehicle where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

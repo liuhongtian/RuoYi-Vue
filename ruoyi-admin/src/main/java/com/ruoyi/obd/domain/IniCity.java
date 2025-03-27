@@ -9,7 +9,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 城市信息对象 Ini_City
  * 
  * @author ruoyi
- * @date 2025-03-26
+ * @date 2025-03-27
  */
 public class IniCity extends BaseEntity
 {
@@ -55,7 +55,6 @@ public class IniCity extends BaseEntity
     {
         return pkId;
     }
-
     public void setSeqNo(Long seqNo) 
     {
         this.seqNo = seqNo;
@@ -65,7 +64,6 @@ public class IniCity extends BaseEntity
     {
         return seqNo;
     }
-
     public void setProvinceId(String provinceId) 
     {
         this.provinceId = provinceId;
@@ -75,7 +73,6 @@ public class IniCity extends BaseEntity
     {
         return provinceId;
     }
-
     public void setCountryId(String countryId) 
     {
         this.countryId = countryId;
@@ -85,7 +82,6 @@ public class IniCity extends BaseEntity
     {
         return countryId;
     }
-
     public void setAcityId(String acityId) 
     {
         this.acityId = acityId;
@@ -95,7 +91,6 @@ public class IniCity extends BaseEntity
     {
         return acityId;
     }
-
     public void setCityId(String cityId) 
     {
         this.cityId = cityId;
@@ -105,7 +100,6 @@ public class IniCity extends BaseEntity
     {
         return cityId;
     }
-
     public void setCityName(String cityName) 
     {
         this.cityName = cityName;
@@ -115,7 +109,6 @@ public class IniCity extends BaseEntity
     {
         return cityName;
     }
-
     public void setTelDistCode(String telDistCode) 
     {
         this.telDistCode = telDistCode;
@@ -125,7 +118,6 @@ public class IniCity extends BaseEntity
     {
         return telDistCode;
     }
-
     public void setPostCode(String postCode) 
     {
         this.postCode = postCode;

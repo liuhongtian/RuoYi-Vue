@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.ObdMonthPlanMapper">
+    
+    <resultMap type="ObdMonthPlan" id="ObdMonthPlanResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="planNo"    column="Plan_No"    />
+        <result property="planMonth"    column="Plan_Month"    />
+        <result property="planQuarter"    column="Plan_quarter"    />
+        <result property="monthFlag"    column="Month_Flag"    />
+        <result property="planResource"    column="Plan_Resource"    />
+        <result property="sectionCode"    column="Section_Code"    />
+        <result property="sectionName"    column="Section_Name"    />
+        <result property="status"    column="Status"    />
+        <result property="startDate"    column="Start_Date"    />
+        <result property="endDate"    column="End_Date"    />
+        <result property="taskContent"    column="Task_Content"    />
+        <result property="releaseTime"    column="Release_Time"    />
+        <result property="releaseUser"    column="Release_User"    />
+        <result property="taskNo"    column="Task_No"    />
+        <result property="executionStatus"    column="Execution_Status"    />
+        <result property="executionDesc"    column="Execution_Desc"    />
+    </resultMap>
+
+    <sql id="selectObdMonthPlanVo">
+        select PK_ID, Plan_No, Plan_Month, Plan_quarter, Month_Flag, Plan_Resource, Section_Code, Section_Name, Status, Start_Date, End_Date, Task_Content, Release_Time, Release_User, Task_No, Execution_Status, Execution_Desc from Obd_Month_Plan
+    </sql>
+
+    <select id="selectObdMonthPlanList" parameterType="ObdMonthPlan" resultMap="ObdMonthPlanResult">
+        <include refid="selectObdMonthPlanVo"/>
+        <where>  
+            <if test="planNo != null  and planNo != ''"> and Plan_No = #{planNo}</if>
+            <if test="planMonth != null  and planMonth != ''"> and Plan_Month = #{planMonth}</if>
+            <if test="planQuarter != null  and planQuarter != ''"> and Plan_quarter = #{planQuarter}</if>
+            <if test="monthFlag != null  and monthFlag != ''"> and Month_Flag = #{monthFlag}</if>
+            <if test="planResource != null  and planResource != ''"> and Plan_Resource = #{planResource}</if>
+            <if test="sectionCode != null  and sectionCode != ''"> and Section_Code = #{sectionCode}</if>
+            <if test="sectionName != null  and sectionName != ''"> and Section_Name like concat('%', #{sectionName}, '%')</if>
+            <if test="status != null  and status != ''"> and Status = #{status}</if>
+            <if test="startDate != null "> and Start_Date = #{startDate}</if>
+            <if test="endDate != null "> and End_Date = #{endDate}</if>
+            <if test="taskContent != null  and taskContent != ''"> and Task_Content = #{taskContent}</if>
+            <if test="releaseTime != null "> and Release_Time = #{releaseTime}</if>
+            <if test="releaseUser != null  and releaseUser != ''"> and Release_User = #{releaseUser}</if>
+            <if test="taskNo != null  and taskNo != ''"> and Task_No = #{taskNo}</if>
+            <if test="executionStatus != null  and executionStatus != ''"> and Execution_Status = #{executionStatus}</if>
+            <if test="executionDesc != null  and executionDesc != ''"> and Execution_Desc = #{executionDesc}</if>
+        </where>
+    </select>
+    
+    <select id="selectObdMonthPlanByPkId" parameterType="Long" resultMap="ObdMonthPlanResult">
+        <include refid="selectObdMonthPlanVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertObdMonthPlan" parameterType="ObdMonthPlan">
+        insert into Obd_Month_Plan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="planNo != null">Plan_No,</if>
+            <if test="planMonth != null">Plan_Month,</if>
+            <if test="planQuarter != null">Plan_quarter,</if>
+            <if test="monthFlag != null">Month_Flag,</if>
+            <if test="planResource != null">Plan_Resource,</if>
+            <if test="sectionCode != null">Section_Code,</if>
+            <if test="sectionName != null">Section_Name,</if>
+            <if test="status != null">Status,</if>
+            <if test="startDate != null">Start_Date,</if>
+            <if test="endDate != null">End_Date,</if>
+            <if test="taskContent != null">Task_Content,</if>
+            <if test="releaseTime != null">Release_Time,</if>
+            <if test="releaseUser != null">Release_User,</if>
+            <if test="taskNo != null">Task_No,</if>
+            <if test="executionStatus != null">Execution_Status,</if>
+            <if test="executionDesc != null">Execution_Desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="planNo != null">#{planNo},</if>
+            <if test="planMonth != null">#{planMonth},</if>
+            <if test="planQuarter != null">#{planQuarter},</if>
+            <if test="monthFlag != null">#{monthFlag},</if>
+            <if test="planResource != null">#{planResource},</if>
+            <if test="sectionCode != null">#{sectionCode},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="status != null">#{status},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="taskContent != null">#{taskContent},</if>
+            <if test="releaseTime != null">#{releaseTime},</if>
+            <if test="releaseUser != null">#{releaseUser},</if>
+            <if test="taskNo != null">#{taskNo},</if>
+            <if test="executionStatus != null">#{executionStatus},</if>
+            <if test="executionDesc != null">#{executionDesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateObdMonthPlan" parameterType="ObdMonthPlan">
+        update Obd_Month_Plan
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planNo != null">Plan_No = #{planNo},</if>
+            <if test="planMonth != null">Plan_Month = #{planMonth},</if>
+            <if test="planQuarter != null">Plan_quarter = #{planQuarter},</if>
+            <if test="monthFlag != null">Month_Flag = #{monthFlag},</if>
+            <if test="planResource != null">Plan_Resource = #{planResource},</if>
+            <if test="sectionCode != null">Section_Code = #{sectionCode},</if>
+            <if test="sectionName != null">Section_Name = #{sectionName},</if>
+            <if test="status != null">Status = #{status},</if>
+            <if test="startDate != null">Start_Date = #{startDate},</if>
+            <if test="endDate != null">End_Date = #{endDate},</if>
+            <if test="taskContent != null">Task_Content = #{taskContent},</if>
+            <if test="releaseTime != null">Release_Time = #{releaseTime},</if>
+            <if test="releaseUser != null">Release_User = #{releaseUser},</if>
+            <if test="taskNo != null">Task_No = #{taskNo},</if>
+            <if test="executionStatus != null">Execution_Status = #{executionStatus},</if>
+            <if test="executionDesc != null">Execution_Desc = #{executionDesc},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteObdMonthPlanByPkId" parameterType="Long">
+        delete from Obd_Month_Plan where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteObdMonthPlanByPkIds" parameterType="String">
+        delete from Obd_Month_Plan where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

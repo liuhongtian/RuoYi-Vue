@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.OmOperaTeamMapper">
+    
+    <resultMap type="OmOperaTeam" id="OmOperaTeamResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="groupCode"    column="Group_Code"    />
+        <result property="officeCode"    column="Office_Code"    />
+        <result property="companyCode"    column="Company_Code"    />
+        <result property="manageArea"    column="Manage_Area"    />
+        <result property="managePackage"    column="Manage_Package"    />
+        <result property="teamLeader"    column="Team_Leader"    />
+        <result property="teamMembers"    column="Team_Members"    />
+        <result property="teamType"    column="Team_Type"    />
+    </resultMap>
+
+    <sql id="selectOmOperaTeamVo">
+        select PK_ID, Group_Code, Office_Code, Company_Code, Manage_Area, Manage_Package, Team_Leader, Team_Members, Team_Type from OM_Opera_Team
+    </sql>
+
+    <select id="selectOmOperaTeamList" parameterType="OmOperaTeam" resultMap="OmOperaTeamResult">
+        <include refid="selectOmOperaTeamVo"/>
+        <where>  
+            <if test="groupCode != null  and groupCode != ''"> and Group_Code = #{groupCode}</if>
+            <if test="officeCode != null  and officeCode != ''"> and Office_Code = #{officeCode}</if>
+            <if test="companyCode != null  and companyCode != ''"> and Company_Code = #{companyCode}</if>
+            <if test="manageArea != null  and manageArea != ''"> and Manage_Area = #{manageArea}</if>
+            <if test="managePackage != null  and managePackage != ''"> and Manage_Package = #{managePackage}</if>
+            <if test="teamLeader != null  and teamLeader != ''"> and Team_Leader = #{teamLeader}</if>
+            <if test="teamMembers != null  and teamMembers != ''"> and Team_Members = #{teamMembers}</if>
+            <if test="teamType != null  and teamType != ''"> and Team_Type = #{teamType}</if>
+        </where>
+    </select>
+    
+    <select id="selectOmOperaTeamByPkId" parameterType="Long" resultMap="OmOperaTeamResult">
+        <include refid="selectOmOperaTeamVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertOmOperaTeam" parameterType="OmOperaTeam">
+        insert into OM_Opera_Team
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="groupCode != null">Group_Code,</if>
+            <if test="officeCode != null">Office_Code,</if>
+            <if test="companyCode != null">Company_Code,</if>
+            <if test="manageArea != null">Manage_Area,</if>
+            <if test="managePackage != null">Manage_Package,</if>
+            <if test="teamLeader != null">Team_Leader,</if>
+            <if test="teamMembers != null">Team_Members,</if>
+            <if test="teamType != null">Team_Type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="groupCode != null">#{groupCode},</if>
+            <if test="officeCode != null">#{officeCode},</if>
+            <if test="companyCode != null">#{companyCode},</if>
+            <if test="manageArea != null">#{manageArea},</if>
+            <if test="managePackage != null">#{managePackage},</if>
+            <if test="teamLeader != null">#{teamLeader},</if>
+            <if test="teamMembers != null">#{teamMembers},</if>
+            <if test="teamType != null">#{teamType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOmOperaTeam" parameterType="OmOperaTeam">
+        update OM_Opera_Team
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupCode != null">Group_Code = #{groupCode},</if>
+            <if test="officeCode != null">Office_Code = #{officeCode},</if>
+            <if test="companyCode != null">Company_Code = #{companyCode},</if>
+            <if test="manageArea != null">Manage_Area = #{manageArea},</if>
+            <if test="managePackage != null">Manage_Package = #{managePackage},</if>
+            <if test="teamLeader != null">Team_Leader = #{teamLeader},</if>
+            <if test="teamMembers != null">Team_Members = #{teamMembers},</if>
+            <if test="teamType != null">Team_Type = #{teamType},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteOmOperaTeamByPkId" parameterType="Long">
+        delete from OM_Opera_Team where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteOmOperaTeamByPkIds" parameterType="String">
+        delete from OM_Opera_Team where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

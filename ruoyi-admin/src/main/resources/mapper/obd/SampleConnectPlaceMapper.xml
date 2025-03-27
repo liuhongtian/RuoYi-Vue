@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.SampleConnectPlaceMapper">
+    
+    <resultMap type="SampleConnectPlace" id="SampleConnectPlaceResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="placeCode"    column="Place_Code"    />
+        <result property="placeName"    column="Place_Name"    />
+        <result property="longitude"    column="Longitude"    />
+        <result property="latitude"    column="Latitude"    />
+    </resultMap>
+
+    <sql id="selectSampleConnectPlaceVo">
+        select PK_ID, Place_Code, Place_Name, Longitude, Latitude from Sample_Connect_Place
+    </sql>
+
+    <select id="selectSampleConnectPlaceList" parameterType="SampleConnectPlace" resultMap="SampleConnectPlaceResult">
+        <include refid="selectSampleConnectPlaceVo"/>
+        <where>  
+            <if test="placeCode != null  and placeCode != ''"> and Place_Code = #{placeCode}</if>
+            <if test="placeName != null  and placeName != ''"> and Place_Name like concat('%', #{placeName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSampleConnectPlaceByPkId" parameterType="Long" resultMap="SampleConnectPlaceResult">
+        <include refid="selectSampleConnectPlaceVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertSampleConnectPlace" parameterType="SampleConnectPlace" useGeneratedKeys="true" keyProperty="pkId">
+        insert into Sample_Connect_Place
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="placeCode != null">Place_Code,</if>
+            <if test="placeName != null">Place_Name,</if>
+            <if test="longitude != null">Longitude,</if>
+            <if test="latitude != null">Latitude,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="placeCode != null">#{placeCode},</if>
+            <if test="placeName != null">#{placeName},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSampleConnectPlace" parameterType="SampleConnectPlace">
+        update Sample_Connect_Place
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="placeCode != null">Place_Code = #{placeCode},</if>
+            <if test="placeName != null">Place_Name = #{placeName},</if>
+            <if test="longitude != null">Longitude = #{longitude},</if>
+            <if test="latitude != null">Latitude = #{latitude},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteSampleConnectPlaceByPkId" parameterType="Long">
+        delete from Sample_Connect_Place where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteSampleConnectPlaceByPkIds" parameterType="String">
+        delete from Sample_Connect_Place where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>
