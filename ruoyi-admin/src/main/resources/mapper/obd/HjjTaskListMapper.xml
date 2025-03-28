@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="taskDate"    column="Task_Date"    />
         <result property="sectionCode"    column="Section_Code"    />
         <result property="sectionName"    column="Section_Name"    />
-        <result property="Status"    column="Status"    />
+        <result property="status"    column="Status"    />
         <result property="taskContent"    column="Task_Content"    />
         <result property="companyCode"    column="Company_Code"    />
         <result property="teamLeader"    column="Team_Leader"    />
@@ -47,10 +47,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="testResult"    column="Test_Result"    />
         <result property="cyTaskStatus"    column="CY_Task_Status"    />
         <result property="docId"    column="Doc_ID"    />
+        <result property="wekanCardId"    column="Wekan_Card_Id"    />
     </resultMap>
 
     <sql id="selectHjjTaskListVo">
-        select PK_ID, Task_No, Task_Date, Section_Code, Section_Name, Status, Task_Content, Company_Code, Team_Leader, Team_Members, Vehicle_Licence, CF_Place, CF_Time, Arrival_Distance, Planned_Travel_Duration, Planned_Work_Duration, Planned_Start_Time, Planned_End_Time, SY_Place, Planned_SY_Time, APS_Time, Confirm_Time, Confirm_User, Audit_Time, Audit_User, Release_Time, Release_User, Test_Station, Clock_In, CY_Task_No, YPFX_Time, Actual_SY_Time, Transport_User, Transport_Licence, Transport_Task_No, Planned_Test_Station_Time, Actual_Test_Station_Time, Test_Result_Time, Test_Task_No, Test_Result, CY_Task_Status, Doc_ID from Hjj_Task_List
+        select PK_ID, Task_No, Task_Date, Section_Code, Section_Name, Status, Task_Content, Company_Code, Team_Leader, Team_Members, Vehicle_Licence, CF_Place, CF_Time, Arrival_Distance, Planned_Travel_Duration, Planned_Work_Duration, Planned_Start_Time, Planned_End_Time, SY_Place, Planned_SY_Time, APS_Time, Confirm_Time, Confirm_User, Audit_Time, Audit_User, Release_Time, Release_User, Test_Station, Clock_In, CY_Task_No, YPFX_Time, Actual_SY_Time, Transport_User, Transport_Licence, Transport_Task_No, Planned_Test_Station_Time, Actual_Test_Station_Time, Test_Result_Time, Test_Task_No, Test_Result, CY_Task_Status, Doc_ID, Wekan_Card_Id from Hjj_Task_List
     </sql>
 
     <select id="selectHjjTaskListList" parameterType="HjjTaskList" resultMap="HjjTaskListResult">
@@ -60,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskDate != null  and taskDate != ''"> and Task_Date = #{taskDate}</if>
             <if test="sectionCode != null  and sectionCode != ''"> and Section_Code = #{sectionCode}</if>
             <if test="sectionName != null  and sectionName != ''"> and Section_Name like concat('%', #{sectionName}, '%')</if>
-            <if test="Status != null  and Status != ''"> and Status = #{Status}</if>
+            <if test="status != null  and status != ''"> and Status = #{status}</if>
             <if test="companyCode != null  and companyCode != ''"> and Company_Code = #{companyCode}</if>
             <if test="teamLeader != null  and teamLeader != ''"> and Team_Leader = #{teamLeader}</if>
             <if test="teamMembers != null  and teamMembers != ''"> and Team_Members = #{teamMembers}</if>
@@ -94,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testResult != null  and testResult != ''"> and Test_Result = #{testResult}</if>
             <if test="cyTaskStatus != null  and cyTaskStatus != ''"> and CY_Task_Status = #{cyTaskStatus}</if>
             <if test="docId != null "> and Doc_ID = #{docId}</if>
+            <if test="wekanCardId != null  and wekanCardId != ''"> and Wekan_Card_Id = #{wekanCardId}</if>
         </where>
     </select>
     
@@ -110,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskDate != null">Task_Date,</if>
             <if test="sectionCode != null">Section_Code,</if>
             <if test="sectionName != null">Section_Name,</if>
-            <if test="Status != null">Status,</if>
+            <if test="status != null">Status,</if>
             <if test="taskContent != null">Task_Content,</if>
             <if test="companyCode != null">Company_Code,</if>
             <if test="teamLeader != null">Team_Leader,</if>
@@ -147,6 +149,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testResult != null">Test_Result,</if>
             <if test="cyTaskStatus != null">CY_Task_Status,</if>
             <if test="docId != null">Doc_ID,</if>
+            <if test="wekanCardId != null">Wekan_Card_Id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="pkId != null">#{pkId},</if>
@@ -154,7 +157,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskDate != null">#{taskDate},</if>
             <if test="sectionCode != null">#{sectionCode},</if>
             <if test="sectionName != null">#{sectionName},</if>
-            <if test="Status != null">#{Status},</if>
+            <if test="status != null">#{status},</if>
             <if test="taskContent != null">#{taskContent},</if>
             <if test="companyCode != null">#{companyCode},</if>
             <if test="teamLeader != null">#{teamLeader},</if>
@@ -191,6 +194,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testResult != null">#{testResult},</if>
             <if test="cyTaskStatus != null">#{cyTaskStatus},</if>
             <if test="docId != null">#{docId},</if>
+            <if test="wekanCardId != null">#{wekanCardId},</if>
          </trim>
     </insert>
 
@@ -201,7 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="taskDate != null">Task_Date = #{taskDate},</if>
             <if test="sectionCode != null">Section_Code = #{sectionCode},</if>
             <if test="sectionName != null">Section_Name = #{sectionName},</if>
-            <if test="Status != null">Status = #{Status},</if>
+            <if test="status != null">Status = #{status},</if>
             <if test="taskContent != null">Task_Content = #{taskContent},</if>
             <if test="companyCode != null">Company_Code = #{companyCode},</if>
             <if test="teamLeader != null">Team_Leader = #{teamLeader},</if>
@@ -238,6 +242,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="testResult != null">Test_Result = #{testResult},</if>
             <if test="cyTaskStatus != null">CY_Task_Status = #{cyTaskStatus},</if>
             <if test="docId != null">Doc_ID = #{docId},</if>
+            <if test="wekanCardId != null">Wekan_Card_Id = #{wekanCardId},</if>
         </trim>
         where PK_ID = #{pkId}
     </update>

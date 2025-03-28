@@ -14,6 +14,23 @@ ruoyi:
   # 验证码类型 math 数字计算 char 字符验证
   captchaType: math
 
+# Wekan配置
+wekan:
+  username: liuhongtian
+  password: zhangwan
+  ids:
+    board: g2G5fWZrn5m8zHydK
+    swimlane: a8FMJTjhQk38vE6Ra
+    lists:
+      pending: j7DnhEC3Ry6R79zjH # 待调度
+      scheduling: j3tgGwysjqBnwMNqK # 调度处理中
+      apply: 3bJE2KChDkhT27XcC # 排程申请中
+      scheduled: j4Yj9i26hwkMLfBYX # 已排程
+      processing: qfz64BoBWPbYCz9vb # 处理中
+  urls:
+    login: http://www.liuhongtian.com:24001/users/login
+    apibase: http://www.liuhongtian.com:24001/api
+
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080

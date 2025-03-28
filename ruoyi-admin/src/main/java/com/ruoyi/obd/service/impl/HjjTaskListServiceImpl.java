@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.obd.mapper.HjjTaskListMapper;
+import com.ruoyi.kanban.client.WekanRestfulClient;
+import com.ruoyi.kanban.client.model.NewCard;
 import com.ruoyi.obd.domain.HjjTaskList;
 import com.ruoyi.obd.service.IHjjTaskListService;
 
@@ -18,6 +20,9 @@ public class HjjTaskListServiceImpl implements IHjjTaskListService
 {
     @Autowired
     private HjjTaskListMapper hjjTaskListMapper;
+
+    @Autowired
+    private WekanRestfulClient wekanRestfulClient;
 
     /**
      * 查询水样采样跟踪
@@ -52,6 +57,13 @@ public class HjjTaskListServiceImpl implements IHjjTaskListService
     @Override
     public int insertHjjTaskList(HjjTaskList hjjTaskList)
     {
+        // TODO: 演示样例：新增水样采样任务时，创建Wekan卡片
+        NewCard c = new NewCard();
+        c.setTitle(hjjTaskList.getTaskNo());
+        c.setDescription(hjjTaskList.getTaskContent());
+        String cardId = wekanRestfulClient.newCard(c);
+        hjjTaskList.setWekanCardId(cardId);
+        
         return hjjTaskListMapper.insertHjjTaskList(hjjTaskList);
     }
 

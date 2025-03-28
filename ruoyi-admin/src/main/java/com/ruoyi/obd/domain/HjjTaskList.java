@@ -39,7 +39,7 @@ public class HjjTaskList extends BaseEntity
 
     /** 状态 */
     @Excel(name = "状态")
-    private String Status;
+    private String status;
 
     /** 任务内容 */
     private String taskContent;
@@ -198,6 +198,10 @@ public class HjjTaskList extends BaseEntity
     @Excel(name = "工作流")
     private Long docId;
 
+    /** 卡片ID */
+    @Excel(name = "Wekan卡片ID")
+    private String wekanCardId;
+
     public void setPkId(Long pkId) 
     {
         this.pkId = pkId;
@@ -248,14 +252,14 @@ public class HjjTaskList extends BaseEntity
         return sectionName;
     }
 
-    public void setStatus(String Status) 
+    public void setStatus(String status) 
     {
-        this.Status = Status;
+        this.status = status;
     }
 
     public String getStatus() 
     {
-        return Status;
+        return status;
     }
 
     public void setTaskContent(String taskContent) 
@@ -618,6 +622,16 @@ public class HjjTaskList extends BaseEntity
         return docId;
     }
 
+    public void setWekanCardId(String wekanCardId) 
+    {
+        this.wekanCardId = wekanCardId;
+    }
+
+    public String getWekanCardId() 
+    {
+        return wekanCardId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -626,7 +640,7 @@ public class HjjTaskList extends BaseEntity
             .append("taskDate", getTaskDate())
             .append("sectionCode", getSectionCode())
             .append("sectionName", getSectionName())
-            .append("Status", getStatus())
+            .append("status", getStatus())
             .append("taskContent", getTaskContent())
             .append("companyCode", getCompanyCode())
             .append("teamLeader", getTeamLeader())
@@ -663,6 +677,7 @@ public class HjjTaskList extends BaseEntity
             .append("testResult", getTestResult())
             .append("cyTaskStatus", getCyTaskStatus())
             .append("docId", getDocId())
+            .append("wekanCardId", getWekanCardId())
             .toString();
     }
 }

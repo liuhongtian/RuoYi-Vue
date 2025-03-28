@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kanban.mapper.WekanWebhookLogMapper">
+    
+    <resultMap type="WekanWebhookLog" id="WekanWebhookLogResult">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="payload" column="payload"/>
+        <result property="status" column="status"/>
+        <result property="errorMsg" column="error_msg"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectWekanWebhookLogVo">
+        select id, type, payload, status, error_msg, create_time, update_time 
+        from wekan_webhook_log
+    </sql>
+
+    <select id="selectWekanWebhookLogList" parameterType="WekanWebhookLog" resultMap="WekanWebhookLogResult">
+        <include refid="selectWekanWebhookLogVo"/>
+        <where>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="payload != null  and payload != ''"> and payload = #{payload}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="errorMsg != null  and errorMsg != ''"> and error_msg = #{errorMsg}</if>
+        </where>
+    </select>
+    
+    <select id="selectWekanWebhookLogById" parameterType="Long" resultMap="WekanWebhookLogResult">
+        <include refid="selectWekanWebhookLogVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertWekanWebhookLog" parameterType="WekanWebhookLog" useGeneratedKeys="true" keyProperty="id">
+        insert into wekan_webhook_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="payload != null">payload,</if>
+            <if test="status != null">status,</if>
+            <if test="errorMsg != null">error_msg,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="payload != null">#{payload},</if>
+            <if test="status != null">#{status},</if>
+            <if test="errorMsg != null">#{errorMsg},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWekanWebhookLog" parameterType="WekanWebhookLog">
+        update wekan_webhook_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="payload != null">payload = #{payload},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="errorMsg != null">error_msg = #{errorMsg},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWekanWebhookLogById" parameterType="Long">
+        delete from wekan_webhook_log where id = #{id}
+    </delete>
+
+    <delete id="deleteWekanWebhookLogByIds" parameterType="String">
+        delete from wekan_webhook_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper> 
