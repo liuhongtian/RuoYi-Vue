@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import com.ruoyi.common.core.domain.entity.SysDictData;
 
@@ -26,6 +28,14 @@ public interface SysDictDataMapper
      * @return 字典数据集合信息
      */
     public List<SysDictData> selectDictDataByType(String dictType);
+
+    /**
+     * 根据字典类型查询字典数据，动态表
+     * 
+     * @param dictType 字典类型，包含了表名(dictTable)、字段名(labelColumn)、字段名(valueColumn)、排序字段(sortColumn，可选)
+     * @return 字典数据集合信息
+     */
+    public List<SysDictData> selectDynamicDictDataByType(Map<String, String> dictType);
 
     /**
      * 根据字典类型和字典键值查询字典数据信息

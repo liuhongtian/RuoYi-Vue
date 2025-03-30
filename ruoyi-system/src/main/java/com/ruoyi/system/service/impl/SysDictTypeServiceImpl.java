@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,18 +75,30 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService
     @Override
     public List<SysDictData> selectDictDataByType(String dictType)
     {
-        List<SysDictData> dictDatas = DictUtils.getDictCache(dictType);
-        if (StringUtils.isNotEmpty(dictDatas))
-        {
-            return dictDatas;
+        if (dictType.contains("TCID")) { // 动态字典不使用缓存！
+            String[] dictTypeArray = dictType.split("TCID");
+            Map<String, String> dictTypeMap = new HashMap<>();
+            dictTypeMap.put("dictTable", dictTypeArray[0]);
+            dictTypeMap.put("labelColumn", dictTypeArray[1]);
+            dictTypeMap.put("valueColumn", dictTypeArray[2]);
+            if (dictTypeArray.length > 3) {
+                dictTypeMap.put("sortColumn", dictTypeArray[3]);
+            }
+            return dictDataMapper.selectDynamicDictDataByType(dictTypeMap);
+        } else {
+            List<SysDictData> dictDatas = DictUtils.getDictCache(dictType);
+            if (StringUtils.isNotEmpty(dictDatas))
+            {
+                return dictDatas;
+            }
+            dictDatas = dictDataMapper.selectDictDataByType(dictType);
+            if (StringUtils.isNotEmpty(dictDatas))
+            {
+                DictUtils.setDictCache(dictType, dictDatas);
+                return dictDatas;
+            }
+            return null;
         }
-        dictDatas = dictDataMapper.selectDictDataByType(dictType);
-        if (StringUtils.isNotEmpty(dictDatas))
-        {
-            DictUtils.setDictCache(dictType, dictDatas);
-            return dictDatas;
-        }
-        return null;
     }
 
     /**
