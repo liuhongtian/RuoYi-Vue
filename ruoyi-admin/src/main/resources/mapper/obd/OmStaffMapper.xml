@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.OmStaffMapper">
+    
+    <resultMap type="OmStaff" id="OmStaffResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="staffAccount"    column="Staff_Account"    />
+        <result property="staffName"    column="Staff_Name"    />
+        <result property="company"    column="Company"    />
+        <result property="gender"    column="Gender"    />
+        <result property="licenseNumber"    column="License_Number"    />
+        <result property="contact"    column="Contact"    />
+        <result property="idNumber"    column="ID_Number"    />
+        <result property="auditPoints"    column="Audit_Points"    />
+        <result property="omPoints"    column="OM_Points"    />
+        <result property="capacity"    column="Capacity"    />
+        <result property="motionRange"    column="Motion_Range"    />
+        <result property="staffRole"    column="Staff_Role"    />
+        <result property="leaderFlag"    column="Leader_Flag"    />
+        <result property="manageArea"    column="Manage_Area"    />
+        <result property="manageStation"    column="Manage_Station"    />
+        <result property="manageSection"    column="Manage_Section"    />
+    </resultMap>
+
+    <sql id="selectOmStaffVo">
+        select PK_ID, Staff_Account, Staff_Name, Company, Gender, License_Number, Contact, ID_Number, Audit_Points, OM_Points, Capacity, Motion_Range, Staff_Role, Leader_Flag, Manage_Area, Manage_Station, Manage_Section from OM_Staff
+    </sql>
+
+    <select id="selectOmStaffList" parameterType="OmStaff" resultMap="OmStaffResult">
+        <include refid="selectOmStaffVo"/>
+        <where>  
+            <if test="staffAccount != null  and staffAccount != ''"> and Staff_Account = #{staffAccount}</if>
+            <if test="staffName != null  and staffName != ''"> and Staff_Name like concat('%', #{staffName}, '%')</if>
+            <if test="company != null  and company != ''"> and Company = #{company}</if>
+            <if test="contact != null  and contact != ''"> and Contact = #{contact}</if>
+            <if test="motionRange != null  and motionRange != ''"> and Motion_Range = #{motionRange}</if>
+            <if test="staffRole != null  and staffRole != ''"> and Staff_Role = #{staffRole}</if>
+            <if test="leaderFlag != null  and leaderFlag != ''"> and Leader_Flag = #{leaderFlag}</if>
+            <if test="manageArea != null  and manageArea != ''"> and Manage_Area = #{manageArea}</if>
+            <if test="manageStation != null  and manageStation != ''"> and Manage_Station = #{manageStation}</if>
+        </where>
+    </select>
+    
+    <select id="selectOmStaffByPkId" parameterType="Long" resultMap="OmStaffResult">
+        <include refid="selectOmStaffVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertOmStaff" parameterType="OmStaff">
+        insert into OM_Staff
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="staffAccount != null">Staff_Account,</if>
+            <if test="staffName != null">Staff_Name,</if>
+            <if test="company != null">Company,</if>
+            <if test="gender != null">Gender,</if>
+            <if test="licenseNumber != null">License_Number,</if>
+            <if test="contact != null">Contact,</if>
+            <if test="idNumber != null">ID_Number,</if>
+            <if test="auditPoints != null">Audit_Points,</if>
+            <if test="omPoints != null">OM_Points,</if>
+            <if test="capacity != null">Capacity,</if>
+            <if test="motionRange != null">Motion_Range,</if>
+            <if test="staffRole != null">Staff_Role,</if>
+            <if test="leaderFlag != null">Leader_Flag,</if>
+            <if test="manageArea != null">Manage_Area,</if>
+            <if test="manageStation != null">Manage_Station,</if>
+            <if test="manageSection != null">Manage_Section,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="staffAccount != null">#{staffAccount},</if>
+            <if test="staffName != null">#{staffName},</if>
+            <if test="company != null">#{company},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="licenseNumber != null">#{licenseNumber},</if>
+            <if test="contact != null">#{contact},</if>
+            <if test="idNumber != null">#{idNumber},</if>
+            <if test="auditPoints != null">#{auditPoints},</if>
+            <if test="omPoints != null">#{omPoints},</if>
+            <if test="capacity != null">#{capacity},</if>
+            <if test="motionRange != null">#{motionRange},</if>
+            <if test="staffRole != null">#{staffRole},</if>
+            <if test="leaderFlag != null">#{leaderFlag},</if>
+            <if test="manageArea != null">#{manageArea},</if>
+            <if test="manageStation != null">#{manageStation},</if>
+            <if test="manageSection != null">#{manageSection},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOmStaff" parameterType="OmStaff">
+        update OM_Staff
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="staffAccount != null">Staff_Account = #{staffAccount},</if>
+            <if test="staffName != null">Staff_Name = #{staffName},</if>
+            <if test="company != null">Company = #{company},</if>
+            <if test="gender != null">Gender = #{gender},</if>
+            <if test="licenseNumber != null">License_Number = #{licenseNumber},</if>
+            <if test="contact != null">Contact = #{contact},</if>
+            <if test="idNumber != null">ID_Number = #{idNumber},</if>
+            <if test="auditPoints != null">Audit_Points = #{auditPoints},</if>
+            <if test="omPoints != null">OM_Points = #{omPoints},</if>
+            <if test="capacity != null">Capacity = #{capacity},</if>
+            <if test="motionRange != null">Motion_Range = #{motionRange},</if>
+            <if test="staffRole != null">Staff_Role = #{staffRole},</if>
+            <if test="leaderFlag != null">Leader_Flag = #{leaderFlag},</if>
+            <if test="manageArea != null">Manage_Area = #{manageArea},</if>
+            <if test="manageStation != null">Manage_Station = #{manageStation},</if>
+            <if test="manageSection != null">Manage_Section = #{manageSection},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteOmStaffByPkId" parameterType="Long">
+        delete from OM_Staff where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteOmStaffByPkIds" parameterType="String">
+        delete from OM_Staff where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.JobTimeMapper">
+    
+    <resultMap type="JobTime" id="JobTimeResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="addressCode"    column="Address_Code"    />
+        <result property="jobName"    column="Job_Name"    />
+        <result property="estimateDuration"    column="Estimate_duration"    />
+        <result property="maintainer"    column="Maintainer"    />
+        <result property="maintainTime"    column="Maintain_Time"    />
+    </resultMap>
+
+    <sql id="selectJobTimeVo">
+        select PK_ID, Address_Code, Job_Name, Estimate_duration, Maintainer, Maintain_Time from Job_Time
+    </sql>
+
+    <select id="selectJobTimeList" parameterType="JobTime" resultMap="JobTimeResult">
+        <include refid="selectJobTimeVo"/>
+        <where>  
+            <if test="addressCode != null  and addressCode != ''"> and Address_Code = #{addressCode}</if>
+            <if test="jobName != null  and jobName != ''"> and Job_Name like concat('%', #{jobName}, '%')</if>
+            <if test="estimateDuration != null "> and Estimate_duration = #{estimateDuration}</if>
+            <if test="maintainer != null  and maintainer != ''"> and Maintainer = #{maintainer}</if>
+            <if test="maintainTime != null  and maintainTime != ''"> and Maintain_Time = #{maintainTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectJobTimeByPkId" parameterType="Long" resultMap="JobTimeResult">
+        <include refid="selectJobTimeVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertJobTime" parameterType="JobTime">
+        insert into Job_Time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="addressCode != null">Address_Code,</if>
+            <if test="jobName != null">Job_Name,</if>
+            <if test="estimateDuration != null">Estimate_duration,</if>
+            <if test="maintainer != null">Maintainer,</if>
+            <if test="maintainTime != null">Maintain_Time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="addressCode != null">#{addressCode},</if>
+            <if test="jobName != null">#{jobName},</if>
+            <if test="estimateDuration != null">#{estimateDuration},</if>
+            <if test="maintainer != null">#{maintainer},</if>
+            <if test="maintainTime != null">#{maintainTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateJobTime" parameterType="JobTime">
+        update Job_Time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="addressCode != null">Address_Code = #{addressCode},</if>
+            <if test="jobName != null">Job_Name = #{jobName},</if>
+            <if test="estimateDuration != null">Estimate_duration = #{estimateDuration},</if>
+            <if test="maintainer != null">Maintainer = #{maintainer},</if>
+            <if test="maintainTime != null">Maintain_Time = #{maintainTime},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteJobTimeByPkId" parameterType="Long">
+        delete from Job_Time where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteJobTimeByPkIds" parameterType="String">
+        delete from Job_Time where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

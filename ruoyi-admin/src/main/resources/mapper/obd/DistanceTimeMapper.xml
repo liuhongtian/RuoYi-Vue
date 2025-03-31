@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.DistanceTimeMapper">
+    
+    <resultMap type="DistanceTime" id="DistanceTimeResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="departureName"    column="Departure_Name"    />
+        <result property="departureLatiLong"    column="Departure_Lati_Long"    />
+        <result property="departureType"    column="Departure_Type"    />
+        <result property="arriveName"    column="Arrive_Name"    />
+        <result property="arriveLatiLong"    column="Arrive_Lati_Long"    />
+        <result property="arriveType"    column="Arrive_Type"    />
+        <result property="distance"    column="Distance"    />
+        <result property="timeRequired"    column="Time_Required"    />
+        <result property="dataTime"    column="Data_Time"    />
+    </resultMap>
+
+    <sql id="selectDistanceTimeVo">
+        select PK_ID, Departure_Name, Departure_Lati_Long, Departure_Type, Arrive_Name, Arrive_Lati_Long, Arrive_Type, Distance, Time_Required, Data_Time from Distance_Time
+    </sql>
+
+    <select id="selectDistanceTimeList" parameterType="DistanceTime" resultMap="DistanceTimeResult">
+        <include refid="selectDistanceTimeVo"/>
+        <where>  
+            <if test="departureName != null  and departureName != ''"> and Departure_Name like concat('%', #{departureName}, '%')</if>
+            <if test="departureLatiLong != null  and departureLatiLong != ''"> and Departure_Lati_Long = #{departureLatiLong}</if>
+            <if test="departureType != null  and departureType != ''"> and Departure_Type = #{departureType}</if>
+            <if test="arriveName != null  and arriveName != ''"> and Arrive_Name like concat('%', #{arriveName}, '%')</if>
+            <if test="arriveLatiLong != null  and arriveLatiLong != ''"> and Arrive_Lati_Long = #{arriveLatiLong}</if>
+            <if test="arriveType != null  and arriveType != ''"> and Arrive_Type = #{arriveType}</if>
+            <if test="distance != null "> and Distance = #{distance}</if>
+            <if test="timeRequired != null "> and Time_Required = #{timeRequired}</if>
+            <if test="dataTime != null  and dataTime != ''"> and Data_Time = #{dataTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectDistanceTimeByPkId" parameterType="Long" resultMap="DistanceTimeResult">
+        <include refid="selectDistanceTimeVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertDistanceTime" parameterType="DistanceTime">
+        insert into Distance_Time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="departureName != null">Departure_Name,</if>
+            <if test="departureLatiLong != null">Departure_Lati_Long,</if>
+            <if test="departureType != null">Departure_Type,</if>
+            <if test="arriveName != null">Arrive_Name,</if>
+            <if test="arriveLatiLong != null">Arrive_Lati_Long,</if>
+            <if test="arriveType != null">Arrive_Type,</if>
+            <if test="distance != null">Distance,</if>
+            <if test="timeRequired != null">Time_Required,</if>
+            <if test="dataTime != null">Data_Time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="departureName != null">#{departureName},</if>
+            <if test="departureLatiLong != null">#{departureLatiLong},</if>
+            <if test="departureType != null">#{departureType},</if>
+            <if test="arriveName != null">#{arriveName},</if>
+            <if test="arriveLatiLong != null">#{arriveLatiLong},</if>
+            <if test="arriveType != null">#{arriveType},</if>
+            <if test="distance != null">#{distance},</if>
+            <if test="timeRequired != null">#{timeRequired},</if>
+            <if test="dataTime != null">#{dataTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDistanceTime" parameterType="DistanceTime">
+        update Distance_Time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="departureName != null">Departure_Name = #{departureName},</if>
+            <if test="departureLatiLong != null">Departure_Lati_Long = #{departureLatiLong},</if>
+            <if test="departureType != null">Departure_Type = #{departureType},</if>
+            <if test="arriveName != null">Arrive_Name = #{arriveName},</if>
+            <if test="arriveLatiLong != null">Arrive_Lati_Long = #{arriveLatiLong},</if>
+            <if test="arriveType != null">Arrive_Type = #{arriveType},</if>
+            <if test="distance != null">Distance = #{distance},</if>
+            <if test="timeRequired != null">Time_Required = #{timeRequired},</if>
+            <if test="dataTime != null">Data_Time = #{dataTime},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteDistanceTimeByPkId" parameterType="Long">
+        delete from Distance_Time where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteDistanceTimeByPkIds" parameterType="String">
+        delete from Distance_Time where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

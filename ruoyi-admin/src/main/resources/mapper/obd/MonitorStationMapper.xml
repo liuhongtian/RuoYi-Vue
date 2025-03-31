@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.MonitorStationMapper">
+    
+    <resultMap type="MonitorStation" id="MonitorStationResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="stationCode"    column="Station_Code"    />
+        <result property="stationName"    column="Station_Name"    />
+        <result property="province"    column="Province"    />
+        <result property="address"    column="Address"    />
+        <result property="longitude"    column="Longitude"    />
+        <result property="latitude"    column="Latitude"    />
+        <result property="analyticalSkills"    column="Analytical_Skills"    />
+        <result property="acceptableCapacity"    column="Acceptable_Capacity"    />
+        <result property="acceptableDays"    column="Acceptable_Days"    />
+        <result property="status"    column="Status"    />
+    </resultMap>
+
+    <sql id="selectMonitorStationVo">
+        select PK_ID, Station_Code, Station_Name, Province, Address, Longitude, Latitude, Analytical_Skills, Acceptable_Capacity, Acceptable_Days, Status from Monitor_Station
+    </sql>
+
+    <select id="selectMonitorStationList" parameterType="MonitorStation" resultMap="MonitorStationResult">
+        <include refid="selectMonitorStationVo"/>
+        <where>  
+            <if test="stationCode != null  and stationCode != ''"> and Station_Code = #{stationCode}</if>
+            <if test="stationName != null  and stationName != ''"> and Station_Name like concat('%', #{stationName}, '%')</if>
+            <if test="province != null  and province != ''"> and Province = #{province}</if>
+            <if test="address != null  and address != ''"> and Address = #{address}</if>
+            <if test="longitude != null "> and Longitude = #{longitude}</if>
+            <if test="latitude != null "> and Latitude = #{latitude}</if>
+            <if test="analyticalSkills != null  and analyticalSkills != ''"> and Analytical_Skills = #{analyticalSkills}</if>
+            <if test="acceptableCapacity != null "> and Acceptable_Capacity = #{acceptableCapacity}</if>
+            <if test="acceptableDays != null  and acceptableDays != ''"> and Acceptable_Days = #{acceptableDays}</if>
+            <if test="status != null  and status != ''"> and Status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectMonitorStationByPkId" parameterType="Long" resultMap="MonitorStationResult">
+        <include refid="selectMonitorStationVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertMonitorStation" parameterType="MonitorStation">
+        insert into Monitor_Station
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="stationCode != null">Station_Code,</if>
+            <if test="stationName != null">Station_Name,</if>
+            <if test="province != null">Province,</if>
+            <if test="address != null">Address,</if>
+            <if test="longitude != null">Longitude,</if>
+            <if test="latitude != null">Latitude,</if>
+            <if test="analyticalSkills != null">Analytical_Skills,</if>
+            <if test="acceptableCapacity != null">Acceptable_Capacity,</if>
+            <if test="acceptableDays != null">Acceptable_Days,</if>
+            <if test="status != null">Status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="stationCode != null">#{stationCode},</if>
+            <if test="stationName != null">#{stationName},</if>
+            <if test="province != null">#{province},</if>
+            <if test="address != null">#{address},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="analyticalSkills != null">#{analyticalSkills},</if>
+            <if test="acceptableCapacity != null">#{acceptableCapacity},</if>
+            <if test="acceptableDays != null">#{acceptableDays},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMonitorStation" parameterType="MonitorStation">
+        update Monitor_Station
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationCode != null">Station_Code = #{stationCode},</if>
+            <if test="stationName != null">Station_Name = #{stationName},</if>
+            <if test="province != null">Province = #{province},</if>
+            <if test="address != null">Address = #{address},</if>
+            <if test="longitude != null">Longitude = #{longitude},</if>
+            <if test="latitude != null">Latitude = #{latitude},</if>
+            <if test="analyticalSkills != null">Analytical_Skills = #{analyticalSkills},</if>
+            <if test="acceptableCapacity != null">Acceptable_Capacity = #{acceptableCapacity},</if>
+            <if test="acceptableDays != null">Acceptable_Days = #{acceptableDays},</if>
+            <if test="status != null">Status = #{status},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteMonitorStationByPkId" parameterType="Long">
+        delete from Monitor_Station where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteMonitorStationByPkIds" parameterType="String">
+        delete from Monitor_Station where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.RiverSectionMapper">
+    
+    <resultMap type="RiverSection" id="RiverSectionResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="sectionCode"    column="Section_Code"    />
+        <result property="sectionName"    column="Section_Name"    />
+        <result property="drainageBasin"    column="Drainage_Basin"    />
+        <result property="waterBody"    column="Water_Body"    />
+        <result property="importWb"    column="Import_WB"    />
+        <result property="wbType"    column="WB_Type"    />
+        <result property="specialProperty"    column="Special_Property"    />
+        <result property="longitude"    column="Longitude"    />
+        <result property="latitude"    column="Latitude"    />
+        <result property="assessProvince"    column="Assess_Province"    />
+        <result property="assessCity"    column="Assess_City"    />
+        <result property="locationProvince"    column="Location_Province"    />
+        <result property="locationCity"    column="Location_City"    />
+        <result property="hasAutoSite"    column="Has_Auto_Site"    />
+        <result property="autoSiteCode"    column="Auto_Site_Code"    />
+        <result property="hasSalinityIndicator"    column="Has_Salinity_Indicator"    />
+        <result property="sampledPoints"    column="Sampled_Points"    />
+        <result property="sampledMethod"    column="Sampled_Method"    />
+        <result property="isSelfSampling"    column="Is_Self_Sampling"    />
+        <result property="sampleAvaliableLimit"    column="Sample_Avaliable_Limit"    />
+        <result property="sampleAssessTime"    column="Sample_Assess_Time"    />
+        <result property="samplingTimeFc"    column="Sampling_Time_FC"    />
+        <result property="estimateSamplingCosts"    column="Estimate_Sampling_Costs"    />
+        <result property="samplingCostsFc"    column="Sampling_Costs_FC"    />
+        <result property="isSectionSt"    column="Is_Section_ST"    />
+        <result property="packageCode"    column="Package_Code"    />
+        <result property="sectionStatus"    column="Section_Status"    />
+        <result property="isUninterrupted"    column="Is_Uninterrupted"    />
+        <result property="omCompanyId"    column="OM_Company_ID"    />
+        <result property="sectionProperty"    column="Section__Property"    />
+        <result property="waterCode"    column="Water_Code"    />
+    </resultMap>
+
+    <sql id="selectRiverSectionVo">
+        select PK_ID, Section_Code, Section_Name, Drainage_Basin, Water_Body, Import_WB, WB_Type, Special_Property, Longitude, Latitude, Assess_Province, Assess_City, Location_Province, Location_City, Has_Auto_Site, Auto_Site_Code, Has_Salinity_Indicator, Sampled_Points, Sampled_Method, Is_Self_Sampling, Sample_Avaliable_Limit, Sample_Assess_Time, Sampling_Time_FC, Estimate_Sampling_Costs, Sampling_Costs_FC, Is_Section_ST, Package_Code, Section_Status, Is_Uninterrupted, OM_Company_ID, Section__Property, Water_Code from River_Section
+    </sql>
+
+    <select id="selectRiverSectionList" parameterType="RiverSection" resultMap="RiverSectionResult">
+        <include refid="selectRiverSectionVo"/>
+        <where>  
+            <if test="sectionCode != null  and sectionCode != ''"> and Section_Code = #{sectionCode}</if>
+            <if test="sectionName != null  and sectionName != ''"> and Section_Name like concat('%', #{sectionName}, '%')</if>
+            <if test="drainageBasin != null  and drainageBasin != ''"> and Drainage_Basin = #{drainageBasin}</if>
+            <if test="waterBody != null  and waterBody != ''"> and Water_Body = #{waterBody}</if>
+            <if test="importWb != null  and importWb != ''"> and Import_WB = #{importWb}</if>
+            <if test="wbType != null  and wbType != ''"> and WB_Type = #{wbType}</if>
+            <if test="specialProperty != null  and specialProperty != ''"> and Special_Property = #{specialProperty}</if>
+            <if test="longitude != null "> and Longitude = #{longitude}</if>
+            <if test="latitude != null "> and Latitude = #{latitude}</if>
+            <if test="assessProvince != null  and assessProvince != ''"> and Assess_Province = #{assessProvince}</if>
+            <if test="assessCity != null  and assessCity != ''"> and Assess_City = #{assessCity}</if>
+            <if test="locationProvince != null  and locationProvince != ''"> and Location_Province = #{locationProvince}</if>
+            <if test="locationCity != null  and locationCity != ''"> and Location_City = #{locationCity}</if>
+            <if test="hasAutoSite != null  and hasAutoSite != ''"> and Has_Auto_Site = #{hasAutoSite}</if>
+            <if test="autoSiteCode != null  and autoSiteCode != ''"> and Auto_Site_Code = #{autoSiteCode}</if>
+            <if test="hasSalinityIndicator != null  and hasSalinityIndicator != ''"> and Has_Salinity_Indicator = #{hasSalinityIndicator}</if>
+            <if test="sampledPoints != null "> and Sampled_Points = #{sampledPoints}</if>
+            <if test="sampledMethod != null  and sampledMethod != ''"> and Sampled_Method = #{sampledMethod}</if>
+            <if test="isSelfSampling != null  and isSelfSampling != ''"> and Is_Self_Sampling = #{isSelfSampling}</if>
+            <if test="sampleAvaliableLimit != null "> and Sample_Avaliable_Limit = #{sampleAvaliableLimit}</if>
+            <if test="sampleAssessTime != null "> and Sample_Assess_Time = #{sampleAssessTime}</if>
+            <if test="samplingTimeFc != null  and samplingTimeFc != ''"> and Sampling_Time_FC = #{samplingTimeFc}</if>
+            <if test="estimateSamplingCosts != null "> and Estimate_Sampling_Costs = #{estimateSamplingCosts}</if>
+            <if test="samplingCostsFc != null  and samplingCostsFc != ''"> and Sampling_Costs_FC = #{samplingCostsFc}</if>
+            <if test="isSectionSt != null  and isSectionSt != ''"> and Is_Section_ST = #{isSectionSt}</if>
+            <if test="packageCode != null  and packageCode != ''"> and Package_Code = #{packageCode}</if>
+            <if test="sectionStatus != null  and sectionStatus != ''"> and Section_Status = #{sectionStatus}</if>
+            <if test="isUninterrupted != null  and isUninterrupted != ''"> and Is_Uninterrupted = #{isUninterrupted}</if>
+            <if test="omCompanyId != null  and omCompanyId != ''"> and OM_Company_ID = #{omCompanyId}</if>
+            <if test="sectionProperty != null  and sectionProperty != ''"> and Section__Property = #{sectionProperty}</if>
+            <if test="waterCode != null  and waterCode != ''"> and Water_Code = #{waterCode}</if>
+        </where>
+    </select>
+    
+    <select id="selectRiverSectionByPkId" parameterType="Long" resultMap="RiverSectionResult">
+        <include refid="selectRiverSectionVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertRiverSection" parameterType="RiverSection">
+        insert into River_Section
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="sectionCode != null">Section_Code,</if>
+            <if test="sectionName != null">Section_Name,</if>
+            <if test="drainageBasin != null">Drainage_Basin,</if>
+            <if test="waterBody != null">Water_Body,</if>
+            <if test="importWb != null">Import_WB,</if>
+            <if test="wbType != null">WB_Type,</if>
+            <if test="specialProperty != null">Special_Property,</if>
+            <if test="longitude != null">Longitude,</if>
+            <if test="latitude != null">Latitude,</if>
+            <if test="assessProvince != null">Assess_Province,</if>
+            <if test="assessCity != null">Assess_City,</if>
+            <if test="locationProvince != null">Location_Province,</if>
+            <if test="locationCity != null">Location_City,</if>
+            <if test="hasAutoSite != null">Has_Auto_Site,</if>
+            <if test="autoSiteCode != null">Auto_Site_Code,</if>
+            <if test="hasSalinityIndicator != null">Has_Salinity_Indicator,</if>
+            <if test="sampledPoints != null">Sampled_Points,</if>
+            <if test="sampledMethod != null">Sampled_Method,</if>
+            <if test="isSelfSampling != null">Is_Self_Sampling,</if>
+            <if test="sampleAvaliableLimit != null">Sample_Avaliable_Limit,</if>
+            <if test="sampleAssessTime != null">Sample_Assess_Time,</if>
+            <if test="samplingTimeFc != null">Sampling_Time_FC,</if>
+            <if test="estimateSamplingCosts != null">Estimate_Sampling_Costs,</if>
+            <if test="samplingCostsFc != null">Sampling_Costs_FC,</if>
+            <if test="isSectionSt != null">Is_Section_ST,</if>
+            <if test="packageCode != null">Package_Code,</if>
+            <if test="sectionStatus != null">Section_Status,</if>
+            <if test="isUninterrupted != null">Is_Uninterrupted,</if>
+            <if test="omCompanyId != null">OM_Company_ID,</if>
+            <if test="sectionProperty != null">Section__Property,</if>
+            <if test="waterCode != null">Water_Code,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="sectionCode != null">#{sectionCode},</if>
+            <if test="sectionName != null">#{sectionName},</if>
+            <if test="drainageBasin != null">#{drainageBasin},</if>
+            <if test="waterBody != null">#{waterBody},</if>
+            <if test="importWb != null">#{importWb},</if>
+            <if test="wbType != null">#{wbType},</if>
+            <if test="specialProperty != null">#{specialProperty},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="assessProvince != null">#{assessProvince},</if>
+            <if test="assessCity != null">#{assessCity},</if>
+            <if test="locationProvince != null">#{locationProvince},</if>
+            <if test="locationCity != null">#{locationCity},</if>
+            <if test="hasAutoSite != null">#{hasAutoSite},</if>
+            <if test="autoSiteCode != null">#{autoSiteCode},</if>
+            <if test="hasSalinityIndicator != null">#{hasSalinityIndicator},</if>
+            <if test="sampledPoints != null">#{sampledPoints},</if>
+            <if test="sampledMethod != null">#{sampledMethod},</if>
+            <if test="isSelfSampling != null">#{isSelfSampling},</if>
+            <if test="sampleAvaliableLimit != null">#{sampleAvaliableLimit},</if>
+            <if test="sampleAssessTime != null">#{sampleAssessTime},</if>
+            <if test="samplingTimeFc != null">#{samplingTimeFc},</if>
+            <if test="estimateSamplingCosts != null">#{estimateSamplingCosts},</if>
+            <if test="samplingCostsFc != null">#{samplingCostsFc},</if>
+            <if test="isSectionSt != null">#{isSectionSt},</if>
+            <if test="packageCode != null">#{packageCode},</if>
+            <if test="sectionStatus != null">#{sectionStatus},</if>
+            <if test="isUninterrupted != null">#{isUninterrupted},</if>
+            <if test="omCompanyId != null">#{omCompanyId},</if>
+            <if test="sectionProperty != null">#{sectionProperty},</if>
+            <if test="waterCode != null">#{waterCode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRiverSection" parameterType="RiverSection">
+        update River_Section
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sectionCode != null">Section_Code = #{sectionCode},</if>
+            <if test="sectionName != null">Section_Name = #{sectionName},</if>
+            <if test="drainageBasin != null">Drainage_Basin = #{drainageBasin},</if>
+            <if test="waterBody != null">Water_Body = #{waterBody},</if>
+            <if test="importWb != null">Import_WB = #{importWb},</if>
+            <if test="wbType != null">WB_Type = #{wbType},</if>
+            <if test="specialProperty != null">Special_Property = #{specialProperty},</if>
+            <if test="longitude != null">Longitude = #{longitude},</if>
+            <if test="latitude != null">Latitude = #{latitude},</if>
+            <if test="assessProvince != null">Assess_Province = #{assessProvince},</if>
+            <if test="assessCity != null">Assess_City = #{assessCity},</if>
+            <if test="locationProvince != null">Location_Province = #{locationProvince},</if>
+            <if test="locationCity != null">Location_City = #{locationCity},</if>
+            <if test="hasAutoSite != null">Has_Auto_Site = #{hasAutoSite},</if>
+            <if test="autoSiteCode != null">Auto_Site_Code = #{autoSiteCode},</if>
+            <if test="hasSalinityIndicator != null">Has_Salinity_Indicator = #{hasSalinityIndicator},</if>
+            <if test="sampledPoints != null">Sampled_Points = #{sampledPoints},</if>
+            <if test="sampledMethod != null">Sampled_Method = #{sampledMethod},</if>
+            <if test="isSelfSampling != null">Is_Self_Sampling = #{isSelfSampling},</if>
+            <if test="sampleAvaliableLimit != null">Sample_Avaliable_Limit = #{sampleAvaliableLimit},</if>
+            <if test="sampleAssessTime != null">Sample_Assess_Time = #{sampleAssessTime},</if>
+            <if test="samplingTimeFc != null">Sampling_Time_FC = #{samplingTimeFc},</if>
+            <if test="estimateSamplingCosts != null">Estimate_Sampling_Costs = #{estimateSamplingCosts},</if>
+            <if test="samplingCostsFc != null">Sampling_Costs_FC = #{samplingCostsFc},</if>
+            <if test="isSectionSt != null">Is_Section_ST = #{isSectionSt},</if>
+            <if test="packageCode != null">Package_Code = #{packageCode},</if>
+            <if test="sectionStatus != null">Section_Status = #{sectionStatus},</if>
+            <if test="isUninterrupted != null">Is_Uninterrupted = #{isUninterrupted},</if>
+            <if test="omCompanyId != null">OM_Company_ID = #{omCompanyId},</if>
+            <if test="sectionProperty != null">Section__Property = #{sectionProperty},</if>
+            <if test="waterCode != null">Water_Code = #{waterCode},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteRiverSectionByPkId" parameterType="Long">
+        delete from River_Section where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteRiverSectionByPkIds" parameterType="String">
+        delete from River_Section where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

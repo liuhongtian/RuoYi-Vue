@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.StateControlledStationMapper">
+    
+    <resultMap type="StateControlledStation" id="StateControlledStationResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="stationCode"    column="Station_Code"    />
+        <result property="stationName"    column="Station_Name"    />
+        <result property="section"    column="Section"    />
+        <result property="longitude"    column="Longitude"    />
+        <result property="latitude"    column="Latitude"    />
+        <result property="monitorItems"    column="Monitor_Items"    />
+        <result property="samplingFrequency"    column="Sampling_Frequency"    />
+        <result property="qualityGrade"    column="Quality_Grade"    />
+        <result property="address"    column="Address"    />
+        <result property="status"    column="Status"    />
+        <result property="onlineStatus"    column="Online_Status"    />
+        <result property="higherThreshold"    column="Higher_Threshold"    />
+        <result property="lowerThreshold"    column="Lower_Threshold"    />
+    </resultMap>
+
+    <sql id="selectStateControlledStationVo">
+        select PK_ID, Station_Code, Station_Name, Section, Longitude, Latitude, Monitor_Items, Sampling_Frequency, Quality_Grade, Address, Status, Online_Status, Higher_Threshold, Lower_Threshold from State_Controlled_Station
+    </sql>
+
+    <select id="selectStateControlledStationList" parameterType="StateControlledStation" resultMap="StateControlledStationResult">
+        <include refid="selectStateControlledStationVo"/>
+        <where>  
+            <if test="stationCode != null  and stationCode != ''"> and Station_Code = #{stationCode}</if>
+            <if test="stationName != null  and stationName != ''"> and Station_Name like concat('%', #{stationName}, '%')</if>
+            <if test="section != null  and section != ''"> and Section = #{section}</if>
+            <if test="longitude != null  and longitude != ''"> and Longitude = #{longitude}</if>
+            <if test="latitude != null  and latitude != ''"> and Latitude = #{latitude}</if>
+            <if test="monitorItems != null "> and Monitor_Items = #{monitorItems}</if>
+            <if test="samplingFrequency != null  and samplingFrequency != ''"> and Sampling_Frequency = #{samplingFrequency}</if>
+            <if test="qualityGrade != null "> and Quality_Grade = #{qualityGrade}</if>
+            <if test="address != null  and address != ''"> and Address = #{address}</if>
+            <if test="status != null "> and Status = #{status}</if>
+            <if test="onlineStatus != null "> and Online_Status = #{onlineStatus}</if>
+            <if test="higherThreshold != null  and higherThreshold != ''"> and Higher_Threshold = #{higherThreshold}</if>
+            <if test="lowerThreshold != null  and lowerThreshold != ''"> and Lower_Threshold = #{lowerThreshold}</if>
+        </where>
+    </select>
+    
+    <select id="selectStateControlledStationByPkId" parameterType="Long" resultMap="StateControlledStationResult">
+        <include refid="selectStateControlledStationVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertStateControlledStation" parameterType="StateControlledStation">
+        insert into State_Controlled_Station
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="stationCode != null">Station_Code,</if>
+            <if test="stationName != null">Station_Name,</if>
+            <if test="section != null">Section,</if>
+            <if test="longitude != null">Longitude,</if>
+            <if test="latitude != null">Latitude,</if>
+            <if test="monitorItems != null">Monitor_Items,</if>
+            <if test="samplingFrequency != null">Sampling_Frequency,</if>
+            <if test="qualityGrade != null">Quality_Grade,</if>
+            <if test="address != null">Address,</if>
+            <if test="status != null">Status,</if>
+            <if test="onlineStatus != null">Online_Status,</if>
+            <if test="higherThreshold != null">Higher_Threshold,</if>
+            <if test="lowerThreshold != null">Lower_Threshold,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="stationCode != null">#{stationCode},</if>
+            <if test="stationName != null">#{stationName},</if>
+            <if test="section != null">#{section},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="monitorItems != null">#{monitorItems},</if>
+            <if test="samplingFrequency != null">#{samplingFrequency},</if>
+            <if test="qualityGrade != null">#{qualityGrade},</if>
+            <if test="address != null">#{address},</if>
+            <if test="status != null">#{status},</if>
+            <if test="onlineStatus != null">#{onlineStatus},</if>
+            <if test="higherThreshold != null">#{higherThreshold},</if>
+            <if test="lowerThreshold != null">#{lowerThreshold},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStateControlledStation" parameterType="StateControlledStation">
+        update State_Controlled_Station
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="stationCode != null">Station_Code = #{stationCode},</if>
+            <if test="stationName != null">Station_Name = #{stationName},</if>
+            <if test="section != null">Section = #{section},</if>
+            <if test="longitude != null">Longitude = #{longitude},</if>
+            <if test="latitude != null">Latitude = #{latitude},</if>
+            <if test="monitorItems != null">Monitor_Items = #{monitorItems},</if>
+            <if test="samplingFrequency != null">Sampling_Frequency = #{samplingFrequency},</if>
+            <if test="qualityGrade != null">Quality_Grade = #{qualityGrade},</if>
+            <if test="address != null">Address = #{address},</if>
+            <if test="status != null">Status = #{status},</if>
+            <if test="onlineStatus != null">Online_Status = #{onlineStatus},</if>
+            <if test="higherThreshold != null">Higher_Threshold = #{higherThreshold},</if>
+            <if test="lowerThreshold != null">Lower_Threshold = #{lowerThreshold},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteStateControlledStationByPkId" parameterType="Long">
+        delete from State_Controlled_Station where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteStateControlledStationByPkIds" parameterType="String">
+        delete from State_Controlled_Station where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>

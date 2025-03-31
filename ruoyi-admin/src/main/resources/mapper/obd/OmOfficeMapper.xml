@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.obd.mapper.OmOfficeMapper">
+    
+    <resultMap type="OmOffice" id="OmOfficeResult">
+        <result property="pkId"    column="PK_ID"    />
+        <result property="officeCode"    column="Office_Code"    />
+        <result property="officeName"    column="Office_Name"    />
+        <result property="province"    column="Province"    />
+        <result property="city"    column="City"    />
+        <result property="officeRole"    column="Office_Role"    />
+        <result property="address"    column="Address"    />
+        <result property="longitude"    column="Longitude"    />
+        <result property="latitude"    column="Latitude"    />
+        <result property="company"    column="Company"    />
+    </resultMap>
+
+    <sql id="selectOmOfficeVo">
+        select PK_ID, Office_Code, Office_Name, Province, City, Office_Role, Address, Longitude, Latitude, Company from OM_Office
+    </sql>
+
+    <select id="selectOmOfficeList" parameterType="OmOffice" resultMap="OmOfficeResult">
+        <include refid="selectOmOfficeVo"/>
+        <where>  
+            <if test="officeCode != null  and officeCode != ''"> and Office_Code = #{officeCode}</if>
+            <if test="officeName != null  and officeName != ''"> and Office_Name like concat('%', #{officeName}, '%')</if>
+            <if test="province != null  and province != ''"> and Province = #{province}</if>
+            <if test="city != null  and city != ''"> and City = #{city}</if>
+            <if test="address != null  and address != ''"> and Address = #{address}</if>
+            <if test="longitude != null "> and Longitude = #{longitude}</if>
+            <if test="latitude != null "> and Latitude = #{latitude}</if>
+            <if test="company != null  and company != ''"> and Company = #{company}</if>
+        </where>
+    </select>
+    
+    <select id="selectOmOfficeByPkId" parameterType="Long" resultMap="OmOfficeResult">
+        <include refid="selectOmOfficeVo"/>
+        where PK_ID = #{pkId}
+    </select>
+
+    <insert id="insertOmOffice" parameterType="OmOffice">
+        insert into OM_Office
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">PK_ID,</if>
+            <if test="officeCode != null">Office_Code,</if>
+            <if test="officeName != null">Office_Name,</if>
+            <if test="province != null">Province,</if>
+            <if test="city != null">City,</if>
+            <if test="officeRole != null">Office_Role,</if>
+            <if test="address != null">Address,</if>
+            <if test="longitude != null">Longitude,</if>
+            <if test="latitude != null">Latitude,</if>
+            <if test="company != null">Company,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pkId != null">#{pkId},</if>
+            <if test="officeCode != null">#{officeCode},</if>
+            <if test="officeName != null">#{officeName},</if>
+            <if test="province != null">#{province},</if>
+            <if test="city != null">#{city},</if>
+            <if test="officeRole != null">#{officeRole},</if>
+            <if test="address != null">#{address},</if>
+            <if test="longitude != null">#{longitude},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="company != null">#{company},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOmOffice" parameterType="OmOffice">
+        update OM_Office
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="officeCode != null">Office_Code = #{officeCode},</if>
+            <if test="officeName != null">Office_Name = #{officeName},</if>
+            <if test="province != null">Province = #{province},</if>
+            <if test="city != null">City = #{city},</if>
+            <if test="officeRole != null">Office_Role = #{officeRole},</if>
+            <if test="address != null">Address = #{address},</if>
+            <if test="longitude != null">Longitude = #{longitude},</if>
+            <if test="latitude != null">Latitude = #{latitude},</if>
+            <if test="company != null">Company = #{company},</if>
+        </trim>
+        where PK_ID = #{pkId}
+    </update>
+
+    <delete id="deleteOmOfficeByPkId" parameterType="Long">
+        delete from OM_Office where PK_ID = #{pkId}
+    </delete>
+
+    <delete id="deleteOmOfficeByPkIds" parameterType="String">
+        delete from OM_Office where PK_ID in 
+        <foreach item="pkId" collection="array" open="(" separator="," close=")">
+            #{pkId}
+        </foreach>
+    </delete>
+</mapper>
