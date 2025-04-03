@@ -27,7 +27,7 @@ services:
     volumes:
       - ./ruoyi/java:/jars
       - ./ruoyi/uploadPath:/var/ruoyi/uploadPath
-    command: ["-Xmx1024m", "-jar", "/jars/ruoyi-admin.jar"]
+    command: ["--add-opens", "java.base/java.lang=ALL-UNNAMED", "-Xmx1024m", "-jar", "/jars/ruoyi-admin.jar"]
 
   ruoyi-ui:
     image: nginx

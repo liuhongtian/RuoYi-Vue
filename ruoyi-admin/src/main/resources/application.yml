@@ -146,3 +146,18 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+# camunda相关配置
+camunda.bpm:
+  admin-user:
+    id: demo
+    password: demo
+  filter:
+    create: All tasks
+  run:
+    cors:
+      enabled: true
+      allowed-origins: "*"
+  webapp:
+    application-path: /camunda
+    index-redirect-enabled: false
