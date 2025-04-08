@@ -45,6 +45,10 @@ public class SysUser extends BaseEntity
     @Excel(name = "手机号码", cellType = ColumnType.TEXT)
     private String phonenumber;
 
+    /** 企业微信 */
+    @Excel(name = "企业微信", cellType = ColumnType.TEXT)
+    private String workwx;
+
     /** 用户性别 */
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
@@ -177,6 +181,16 @@ public class SysUser extends BaseEntity
         this.phonenumber = phonenumber;
     }
 
+    public String getWorkwx()
+    {
+        return workwx;
+    }
+
+    public void setWorkwx(String workwx)
+    {
+        this.workwx = workwx;
+    }
+
     public String getSex()
     {
         return sex;
@@ -306,6 +320,7 @@ public class SysUser extends BaseEntity
             .append("nickName", getNickName())
             .append("email", getEmail())
             .append("phonenumber", getPhonenumber())
+            .append("workwx", getWorkwx())
             .append("sex", getSex())
             .append("avatar", getAvatar())
             .append("password", getPassword())
