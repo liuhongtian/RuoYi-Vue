@@ -20,7 +20,7 @@ services:
     restart: always
   
   ruoyi-admin:
-    image: hwjdk:21
+    image: hwjdk:21-zh
     ports:
       - "28080:8080"
     restart: always
@@ -28,15 +28,6 @@ services:
       - ./ruoyi/java:/jars
       - ./ruoyi/uploadPath:/var/ruoyi/uploadPath
     command: ["-Xmx1024m", "-jar", "/jars/ruoyi-admin.jar"]
-
-  ruoyi-ui:
-    image: nginx
-    ports:
-      - "20080:80"
-    restart: always
-    volumes:
-      - ./ruoyi/nginx-conf.d:/etc/nginx/conf.d
-      - ./ruoyi/ui:/usr/share/nginx/html
 
   ruoyi-vue3:
     image: nginx
@@ -46,3 +37,10 @@ services:
     volumes:
       - ./ruoyi/nginx-conf.d:/etc/nginx/conf.d
       - ./ruoyi/ui-vue3:/usr/share/nginx/html
+
+  workwx:
+    image: hwjdk:21-zh
+    restart: always
+    volumes:
+      - ./workwx/java:/jars
+    command: ["-jar", "/jars/workwx-0.0.1-SNAPSHOT.jar"]
