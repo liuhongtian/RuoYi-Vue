@@ -1,7 +1,12 @@
 package com.ruoyi.task.listener;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
+import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.service.delegate.DelegateTask;
 import org.flowable.task.service.delegate.TaskListener;
 import org.slf4j.Logger;
@@ -10,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.system.mapper.SysUserRoleMapper;
 import com.ruoyi.temp.domain.RtWorkwxMsg;
 import com.ruoyi.temp.mapper.RtWorkwxMsgMapper;
 
@@ -28,26 +36,68 @@ public class ApprovalNotify implements TaskListener {
     @Override
     public void notify(DelegateTask delegateTask) {
         log.info("任务监听器:{}", delegateTask);
-        
-        // 从ApplicationContext中获取Mapper
+
         RtWorkwxMsgMapper rtWorkwxMsgMapper = applicationContext.getBean(RtWorkwxMsgMapper.class);
         RepositoryService repositoryService = applicationContext.getBean(RepositoryService.class);
-        
-        RtWorkwxMsg msg = new RtWorkwxMsg();
-        // TODO 消息临时发送到本人
-        msg.setRecvUser("LiuHongTian");
-        msg.setRuoyiUser("liuhongtian");
+        SysUserRoleMapper sysUserRoleMapper = applicationContext.getBean(SysUserRoleMapper.class);
+        SysUserMapper sysUserMapper = applicationContext.getBean(SysUserMapper.class);
+
+        List<Long> receivers = new ArrayList<>();
+
+        String assignee = delegateTask.getAssignee();
+        // 如果assignee不为空，则将assignee添加到receivers中
+        if (assignee != null) {
+            receivers.add(Long.getLong(assignee));
+        }
+
+        // 如果candidates不为空，则将candidates添加到receivers中
+        Set<IdentityLink> candidates = delegateTask.getCandidates();
+        if (candidates != null && !candidates.isEmpty()) {
+            for (IdentityLink candidate : candidates) {
+                if (candidate.getUserId() != null) {
+                    receivers.add(Long.getLong(candidate.getUserId()));
+                }
+                if (candidate.getGroupId() != null) {
+                    List<Long> userIds = sysUserRoleMapper.queryUsersRoleByRoleId(Long.getLong(candidate.getGroupId()));
+                    if (userIds != null && !userIds.isEmpty()) {
+                        userIds.forEach(id -> receivers.add(id));
+                    }
+                }
+            }
+        }
+
+        System.out.println("candidates:" + candidates);
+
+        if (receivers.isEmpty()) {
+            return;
+        }
+
         // TODO 消息内容：
         // http://www.liuhongtian.com:22080/flowable/task/todo/detail/index?procInsId=65&executionId=71&deployId=37&taskId=82
-        String procInsId = delegateTask.getProcessInstanceId(); 
+        String procInsId = delegateTask.getProcessInstanceId();
         String executionId = delegateTask.getExecutionId();
-        ProcessDefinition processDefinition = repositoryService.getProcessDefinition(delegateTask.getProcessDefinitionId());
+        ProcessDefinition processDefinition = repositoryService
+                .getProcessDefinition(delegateTask.getProcessDefinitionId());
         String deployId = processDefinition.getDeploymentId();
         String taskId = delegateTask.getId();
 
-        String url = String.format("http://www.liuhongtian.com:22080/flowable/task/todo/detail/index?procInsId=%s&executionId=%s&deployId=%s&taskId=%s", procInsId, executionId, deployId, taskId);
-        String messageContent = String.format("您有【%s】的审批任务，请及时处理。\n<a href=\"%s\">点击此处进行处理</a>", processDefinition.getName(), url);
-        msg.setMessageContent(messageContent);
-        rtWorkwxMsgMapper.insertRtWorkwxMsg(msg);
+        String url = String.format(
+                "http://www.liuhongtian.com:22080/flowable/task/todo/detail/index?procInsId=%s&executionId=%s&deployId=%s&taskId=%s",
+                procInsId, executionId, deployId, taskId);
+        String messageContent = String.format("您有【%s】的审批任务，请及时处理。\n<a href=\"%s\">点击此处进行处理</a>",
+                processDefinition.getName(), url);
+
+        receivers.forEach(id -> {
+            SysUser user = sysUserMapper.selectUserById(id);
+            if (user != null && user.getWorkwx() != null) {
+                log.info("用户:{}", user);
+                RtWorkwxMsg msg = new RtWorkwxMsg();
+                msg.setRecvUser(user.getWorkwx());
+                msg.setRuoyiUser(user.getUserName());
+                msg.setMessageContent(messageContent);
+                rtWorkwxMsgMapper.insertRtWorkwxMsg(msg);
+            }
+        });
+
     }
 }
