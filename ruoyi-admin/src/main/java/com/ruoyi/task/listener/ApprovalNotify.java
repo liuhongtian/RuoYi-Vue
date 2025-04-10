@@ -47,7 +47,8 @@ public class ApprovalNotify implements TaskListener {
         String assignee = delegateTask.getAssignee();
         // 如果assignee不为空，则将assignee添加到receivers中
         if (assignee != null) {
-            receivers.add(Long.getLong(assignee));
+            log.info("assignee:{}", assignee);
+            receivers.add(Long.valueOf(assignee));
         }
 
         // 如果candidates不为空，则将candidates添加到receivers中
@@ -55,10 +56,13 @@ public class ApprovalNotify implements TaskListener {
         if (candidates != null && !candidates.isEmpty()) {
             for (IdentityLink candidate : candidates) {
                 if (candidate.getUserId() != null) {
-                    receivers.add(Long.getLong(candidate.getUserId()));
+                    log.info("candidate.userId:{}", candidate.getUserId());
+                    receivers.add(Long.valueOf(candidate.getUserId()));
                 }
                 if (candidate.getGroupId() != null) {
-                    List<Long> userIds = sysUserRoleMapper.queryUsersRoleByRoleId(Long.getLong(candidate.getGroupId()));
+                    log.info("candidate.groupId:{}", candidate.getGroupId());
+                    List<Long> userIds = sysUserRoleMapper.queryUsersRoleByRoleId(Long.valueOf(candidate.getGroupId()));
+                    log.info("candidate.userIds:{}", userIds);
                     if (userIds != null && !userIds.isEmpty()) {
                         userIds.forEach(id -> receivers.add(id));
                     }
@@ -66,9 +70,10 @@ public class ApprovalNotify implements TaskListener {
             }
         }
 
-        System.out.println("candidates:" + candidates);
+        log.info("receivers:{}", receivers);
 
         if (receivers.isEmpty()) {
+            log.warn("没有找到接收人");
             return;
         }
 
@@ -89,8 +94,8 @@ public class ApprovalNotify implements TaskListener {
 
         receivers.forEach(id -> {
             SysUser user = sysUserMapper.selectUserById(id);
+            log.info("用户:{}", user);
             if (user != null && user.getWorkwx() != null) {
-                log.info("用户:{}", user);
                 RtWorkwxMsg msg = new RtWorkwxMsg();
                 msg.setRecvUser(user.getWorkwx());
                 msg.setRuoyiUser(user.getUserName());
@@ -99,5 +104,11 @@ public class ApprovalNotify implements TaskListener {
             }
         });
 
+    }
+
+    public static void main(String[] args) {
+        String s = "100";
+        Long l = Long.valueOf(s);
+        System.out.println(l);
     }
 }
