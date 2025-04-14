@@ -26,7 +26,7 @@ services:
     restart: always
     volumes:
       - ./ruoyi/java:/jars
-      - ./ruoyi/uploadPath:/var/ruoyi/uploadPath
+      - ./ruoyi/files:/var/ruoyi/files
     command: ["-Xmx1024m", "-jar", "/jars/ruoyi-admin.jar"]
 
   ruoyi-vue3:
@@ -37,6 +37,7 @@ services:
     volumes:
       - ./ruoyi/nginx-conf.d:/etc/nginx/conf.d
       - ./ruoyi/ui-vue3:/usr/share/nginx/html
+      - ./ruoyi/files:/usr/share/nginx/html/profile
 
   workwx:
     image: hwjdk:21-zh
