@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
+import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
@@ -75,7 +77,8 @@ public class SysUserServiceImpl implements ISysUserService
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user)
     {
-        return userMapper.selectUserList(user);
+        List<SysUser> list = userMapper.selectUserList(user);
+        return list;
     }
 
     /**

@@ -8,6 +8,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
@@ -55,7 +57,8 @@ public class SysRoleServiceImpl implements ISysRoleService
     @DataScope(deptAlias = "d")
     public List<SysRole> selectRoleList(SysRole role)
     {
-        return roleMapper.selectRoleList(role);
+        List<SysRole> list = roleMapper.selectRoleList(role);
+        return list;
     }
 
     /**
