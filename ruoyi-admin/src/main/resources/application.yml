@@ -64,6 +64,8 @@ user:
 
 # Spring配置
 spring:
+  application:
+    name: ruoyi-admin
   # 资源信息
   messages:
     # 国际化资源文件路径
@@ -152,3 +154,13 @@ flowable:
   database-schema-update: true #数据库中不存在流程表时，将该值设置为true
   # 关闭定时任务JOB
   async-executor-activate: false
+
+# 配置Prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    tags:
+      application: ${spring.application.name}
